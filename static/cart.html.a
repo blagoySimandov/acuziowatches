@@ -118,6 +118,9 @@
                   </tr>
                 </thead>
                 <tbody>
+
+
+                  {{define ".ProductCart"}}
                   <tr>
                     <td>
                       <div class="media">
@@ -125,12 +128,12 @@
                           <img src="assets/img/gallery/card1.png" alt="" />
                         </div>
                         <div class="media-body">
-                          <p>Minimalistic shop for multipurpose use</p>
+                          <p>{{.ProductName}}</p>
                         </div>
                       </div>
                     </td>
                     <td>
-                      <h5>$360.00</h5>
+                      <h5>{{.ProductPrice}}</h5>
                     </td>
                     <td>
                       <div class="product_count">
@@ -140,34 +143,22 @@
                       </div>
                     </td>
                     <td>
-                      <h5>$720.00</h5>
+                      <h5>{{.ProductTotal}}</h5>
                     </td>
                   </tr>
-                  <tr>
-                    <td>
-                      <div class="media">
-                        <div class="d-flex">
-                          <img src="assets/img/gallery/card2.png" alt="" />
-                        </div>
-                        <div class="media-body">
-                          <p>Minimalistic shop for multipurpose use</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <h5>$360.00</h5>
-                    </td>
-                    <td>
-                      <div class="product_count">
-                          <span class="input-number-decrement"> <i class="ti-minus"></i></span>
-                          <input class="input-number" type="text" value="1" min="0" max="10">
-                          <span class="input-number-increment"> <i class="ti-plus"></i></span>
-                      </div>
-                    </td>
-                    <td>
-                      <h5>$720.00</h5>
-                    </td>
-                  </tr>
+                  {{end}}
+                  {{range .Products}}
+                    {{if .Count gt 0}}
+                      {{template "ProductCart" .Product}}
+                    {{else}}
+                      <tr>
+                        <td>
+                          <span>No Items in Cart</span>
+                        </td>
+                      </tr>
+
+                  {{end}}
+
                   <tr class="bottom_button">
                     <td>
                       <a class="btn_1" href="#">Update Cart</a>
@@ -187,7 +178,7 @@
                       <h5>Subtotal</h5>
                     </td>
                     <td>
-                      <h5>$2160.00</h5>
+                      <h5>${{.Subtotal}}</h5>
                     </td>
                   </tr>
                   <tr class="shipping_area">
