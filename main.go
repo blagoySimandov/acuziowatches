@@ -40,7 +40,7 @@ func conf(c echo.Context) error {
 	fmt.Printf("Quantity of wathces ordered: %v\n", count)
 	writeCookie(c, "count", count)
 	writeCookie(c, "id", id)
-	return c.
+	return c.NoContent(http.StatusOK)
 }
 
 func main() {
