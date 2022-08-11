@@ -10,8 +10,8 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func loadData() (*ProductData, error) {
-	f, err := os.Open("./static/products.json")
+func loadData(path string) (*ProductData, error) {
+	f, err := os.Open(path)
 	if err != nil {
 		log.Println("Cannot open file")
 		log.Println(err)

@@ -1,3 +1,4 @@
+{{define "productTmpl"}}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -5,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- displays site properly based on user's device -->
 <!--CSS-->
-    <link rel="stylesheet" href="product_css/product_details.css" />
+    <link rel="stylesheet" href="/assets/css/product_details.css" />
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
     <link rel="stylesheet" href="/assets/css/flaticon.css">
@@ -35,78 +36,16 @@
       href="/assets/img/logo/logo.png"
     />
 
-    <script defer src="script.js"></script>
+    <script defer src="/assets/js/productScript.js"></script>
 
     <title>Acuzio Wathes</title>
 
-    <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
   </head>
   <body>
     <div class="body-wrapper"></div>
 
     <!-- Overlay image Modal -->
-    <div class="overlay-container">
-      <div class="item-overlay">
-        <button class="item-overlay__btn">
-          <img
-            src="images/icon-close.svg"
-            alt="close image"
-            class="item-overlay__btn-img"
-          />
-        </button>
-        <div class="item-overlay__mainImg">
-          <img
-            src="images/image-product-1.jpg"
-            alt=""
-            class="item-overlay__img"
-          />
-          <button class="item-overlay__btnlft overlay-btn">
-            <img
-              src="images/icon-next.svg"
-              alt="next symbol image"
-              class="item-overlay__btnlft-img overlay-btn__img"
-            />
-          </button>
-          <button class="item-overlay__btnrgt overlay-btn">
-            <img
-              src="images/icon-next.svg"
-              alt="next symbol image"
-              class="item-overlay__btnrgt-img overlay-btn__img"
-            />
-          </button>
-        </div>
-        <div class="overlay-img__btns">
-          <button class="overlay-img__btn" data-img="0">
-            <img
-              src="images/image-product-1-thumbnail.jpg"
-              alt="shoe product image"
-              class="overlay-img__btn-img"
-            />
-          </button>
-          <button class="overlay-img__btn" data-img="1">
-            <img
-              src="images/image-product-2-thumbnail.jpg"
-              alt="shoe product image"
-              class="overlay-img__btn-img"
-            />
-          </button>
-          <button class="overlay-img__btn" data-img="2">
-            <img
-              src="images/image-product-3-thumbnail.jpg"
-              alt="shoe product image"
-              class="overlay-img__btn-img"
-            />
-          </button>
-          <button class="overlay-img__btn" data-img="3">
-            <img
-              src="images/image-product-4-thumbnail.jpg"
-              alt="shoe product image"
-              class="overlay-img__btn-img"
-            />
-          </button>
-        </div>
-      </div>
-    </div>
+
 
 
 
@@ -122,16 +61,15 @@
                 <div class="menu-wrapper">
                     <!-- Logo -->
                     <div class="logo">
-                        <a href="index.html"><img src="/assets/img/logo/logo.png" alt=""></a>
+                        <a href="/"><img src="/assets/img/logo/logo.png" alt=""></a>
                     </div>
                     <!-- Main-menu -->
                     <div class="main-menu d-none d-lg-block">
                         <nav>                                                
                             <ul id="navigation">  
-                                <li><a href="/index.html">Home</a></li>
-                                <li><a href="/shop.html">shop</a></li>
+                                <li><a href="/">Home</a></li>
+                                <li><a href="/shop">shop</a></li>
                                 <li><a href="/about.html">about</a></li>
-                                <li><a href="/product_details.html"> Product Details</a></li>
                                 <li><a href="/contact.html">Contact</a></li>
                             </ul>
                         </nav>
@@ -139,7 +77,7 @@
                     <!-- Header Right -->
                     <div class="header-right">
                         <ul>
-                            <li><a href="cart.html"><span class="flaticon-shopping-cart"></span></a> </li>
+                            <li><a href="/cart"><span class="flaticon-shopping-cart"></span></a> </li>
                         </ul>
                     </div>
                 </div>
@@ -163,51 +101,51 @@
       <section class="img">
         <button class="img-main__btnlft img-main__btn">
           <img
-            src="images/icon-next.svg"
+            src="/assets/img/icon-next.svg"
             alt="next symbol image"
             class="img-main__btnlft-img img-main__btn-img"
           />
         </button>
         <button class="img-main__btnrgt img-main__btn">
           <img
-            src="images/icon-next.svg"
+            src="/assets/img/icon-next.svg"
             alt="next symbol image"
             class="img-main__btnrgt-img img-main__btn-img"
           />
         </button>
-        <img src="/assets/img/watches/lige.webp" alt="" class="img-main" />
+        <img src="/assets/img/watches/{{.Name}}/1.webp" alt="" class="img-main" />
         <div class="img-btns">
             <button class="img-btn">
               <img
-                src="/assets/img/watches/lige.webp"
+                src="/assets/img/watches/{{.Name}}/1.webp"
                 alt="shoe product image"
                 class="img-btn__img"
               />
         <div class="img-btns">
           <button class="img-btn">
             <img
-              src="/assets/img/watches/lige2.webp"
+              src="/assets/img/watches/{{.Name}}/2.webp"
               alt="shoe product image"
               class="img-btn__img"
             />
           </button>
           <button class="img-btn">
             <img
-              src="/assets/img/watches/lige3.webp"
+              src="/assets/img/watches/{{.Name}}/3.webp"
               alt="shoe product image"
               class="img-btn__img"
             />
           </button>
           <button class="img-btn">
             <img
-              src="/assets/img/watches/lige4.webp"
+              src="/assets/img/watches/{{.Name}}/4.webp"
               alt="shoe product image"
               class="img-btn__img"
             />
           </button>
           <button class="img-btn">
             <img
-              src="/assets/img/watches/lige5.webp"
+              src="/assets/img/watches/{{.Name}}/5.webp"
               alt="shoe product image"
               class="img-btn__img"
             />
@@ -223,17 +161,17 @@
         </p>
         <div class="price-box">
           <div class="price-box__main">
-            <span class="price-box__main-new">$99.99</span>
+            <span class="price-box__main-new">{{.Currency}} {{.Price}}</span>
             <span class="price-box__main-discount"> 33%</span>
           </div>
-          <span class="price-box__old">$149.99</span>
+          <span class="price-box__old">{{.OldPrice}}</span>
         </div>
         <form action="/confirm" method="POST" enctype="application/x-www-form-urlencoded">
         <div class="price-btnbox">
           <div class="price-btns">
             <button id="add" type="button" class="price-btn__add price-btn">
               <img
-                src="images/icon-plus.svg"
+                src="/assets/img/icon-plus.svg"
                 alt="plus sign"
                 class="price-btn__add-img price-btn__img"
               />
@@ -241,7 +179,7 @@
             <input id="count" class="price-btn_txt" type="number" value="0" min="1" name="count" readonly>
             <button id="remove" type="button" class="price-btn__remove price-btn">
               <img
-                src="images/icon-minus.svg"
+                src="/assets/img/icon-minus.svg"
                 alt="minus sign"
                 class="price-btn__remove-img price-btn__img"
               />
@@ -249,7 +187,7 @@
           </div>
           <button type="submit" class="price-cart__btn" >
             <img
-              src="images/icon-cart.svg"
+              src="/assets/img/icon-cart.svg"
               alt="cart image"
               class="price-cart__btn-img"
             />
@@ -263,3 +201,4 @@
     <!-- Attribution -->
   </body>
 </html>
+{{end}}

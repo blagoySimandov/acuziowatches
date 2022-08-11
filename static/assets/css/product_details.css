@@ -515,7 +515,7 @@ body {
 }
 
 .price-box__old {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
     color: var(--grayish-blue);
     position: relative;
 }

@@ -1,0 +1,40 @@
+{
+    "products": [
+        {
+            "name": "Lige",
+            "price": "99.99",
+            "currency": "USD",
+            "img": "./assets/img/watches/lige.webp"
+        },
+        {
+            "name": "Lige",
+            "price": "99.99",
+            "currency": "USD",
+            "img": "./assets/img/watches/lige.webp"
+        },
+        {
+            "name": "Lige",
+            "price": "99.99",
+            "currency": "USD",
+            "img": "./assets/img/watches/lige.webp"
+        },
+        {
+            "name": "Lige",
+            "price": "99.99",
+            "currency": "USD",
+            "img": "./assets/img/watches/lige.webp"
+        },
+        {
+            "name": "Lige",
+            "price": "99.99",
+            "currency": "USD",
+            "img": "./assets/img/watches/lige.webp"
+        },
+        {
+            "name": "Lige",
+            "price": "99.99",
+            "currency": "USD",
+            "img": "./assets/img/watches/lige.webp"
+        }
+    ]
+}
