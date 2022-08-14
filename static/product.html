@@ -166,7 +166,7 @@
           </div>
           <span class="price-box__old">{{.OldPrice}}</span>
         </div>
-        <form action="/confirm" method="POST" enctype="application/x-www-form-urlencoded">
+        <form action="/addToCart/{{.Id}}" method="POST" target="hiddenFrame"enctype="application/x-www-form-urlencoded">
         <div class="price-btnbox">
           <div class="price-btns">
             <button id="add" type="button" class="price-btn__add price-btn">
