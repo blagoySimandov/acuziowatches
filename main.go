@@ -1,11 +1,14 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 	"text/template"
 	"time"
 
+	"github.com/gorilla/sessions"
+	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
 )
@@ -51,6 +54,7 @@ func Index(c echo.Context) error {
 	fmt.Printf("Quantity of wathces ordered: %v\n", count)
 	writeCookie(c, "count", count)
 	writeCookie(c, "id", id)*/
+
 	return c.Render(http.StatusOK, "indexTmpl", bestProducts)
 }
 
@@ -67,10 +71,55 @@ func ProductDetails(c echo.Context) error {
 	return c.Render(http.StatusOK, "productTmpl", productData.Products[id])
 }
 
+func AddToCart(c echo.Context) error {
+	id := c.Param("id")
+	count := c.FormValue("count")
+	//session
+	sess, err := session.Get("session", c)
+	if err != nil {
+		log.Error("error in creating a session")
+	}
+	sess.Options = &sessions.Options{
+		// Path:     "/cart",
+		MaxAge:   1800,
+		HttpOnly: true,
+	}
+	sess.Values[id] = count
+	fmt.Println(sess.Values)
+	sess.Save(c.Request(), c.Response())
+
+	return c.Redirect(http.StatusMovedPermanently, "/cart")
+
+}
+func Cart(c echo.Context) error {
+	fmt.Println("CART")
+	sess, err := session.Get("session", c)
+	if err != nil {
+		log.Error("error in creating a session")
+	}
+	for i, _ := range sess.Values {
+		for _, p := range cartData.Products {
+			if i == p.Id {
+				p.Count = sess.Values[i]
+				fmt.Println(sess.Values)
+			}
+		}
+	}
+
+	return c.Render(http.StatusOK, "cartTmpl", cartData)
+}
+
 var productData *ProductData
 var bestProducts *ProductData
+var cartData *CartData //Cart Data = Product Data + a field for quantity "Count"
 
 func main() {
+
+	localCd, err := loadData(productsJSON)
+	if err != nil {
+		panic(err)
+	}
+
 	localBpd, err := loadData(bestProductsJSON)
 	if err != nil {
 		panic(err)
@@ -87,10 +136,15 @@ func main() {
 	e.Renderer = &Template{
 		templates: template.Must(template.ParseGlob("./static/*.html")),
 	}
+	e.Use(session.Middleware(sessions.NewCookieStore([]byte("secret"))))
+
 	e.Static("/", "./static")
 	e.GET("/shop", Shop)
 	e.GET("/", Index)
 	e.GET("/product/:id", ProductDetails)
+	e.POST("/addToCart/:id", AddToCart)
+	e.GET("/cart", Cart)
+
 	//e.POST("/confirm", conf)
 
 	e.Logger.Fatal(e.Start(":8080"))
