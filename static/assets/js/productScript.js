@@ -31,50 +31,37 @@ const body = document.querySelector("body");
 
 const headerCart = document.querySelector(".head-rgt");
 
-/* Eventlisteners related to cart and items adding */
-let nextImg = 0,
-	noOfItems = 0,
-	clicked,
-	trasitionTimer;
-
-const minQuery = window.matchMedia("(min-width: 850px)"),
-	maxQuery = window.matchMedia("(max-width: 850px)");
-
 /*//////////////////////
  Functions 
  /////////////////////*/
 /*Function to stop transition animation from triggering when page resize and reloading  */
-function transitionDelay() {
-	body.classList.add("preload");
-	clearTimeout(trasitionTimer);
-	trasitionTimer = setTimeout(() => {
-		body.classList.remove("preload");
-	}, 1000);
-}
-
 /* Function to get next and previous images*/
-function imgBtns(btns, img, imgName) {
-	btns.forEach((btn) => {
-		btn.addEventListener("click", function (e) {
-			if (e.target.classList.contains(`${imgName}__btnlft-img`)) {
-				if (nextImg <= 0) nextImg = 3;
-				else nextImg--;
-
-				img.src = `images/image-product-${nextImg + 1}.jpg`;
-			}
-
-			if (e.target.classList.contains(`${imgName}__btnrgt-img`)) {
-				if (nextImg >= 3) nextImg = 0;
-				else nextImg++;
-
-				img.src = `images/image-product-${nextImg + 1}.jpg`;
-			}
-		});
-	});
+function rightBtn(){
+	console.log(img.src)
+	var number = img.src.slice(img.src.lastIndexOf("/")+1,-5);
+	var numberAdd = ++number;
+	const regex = /\/\d+/g;
+	img.src = img.src.replace(regex, "/" + numberAdd);
 }
 
-imgBtns(overlayBtns, overlayImg, "item-overlay");
-imgBtns(mainImgBtns, img, "img-main");
+function leftBtn(){
+	var number = img.src.slice(img.src.lastIndexOf("/")+1,-5);
+
+	const regex = /\/\d+/g;
+	if(number != 1){
+		var numberSubtract = --number;
+		img.src = img.src.replace(regex, "/" + numberSubtract)
+	}
+	
+}
+
+function mainImgError(image){
+
+	var number = img.src.slice(img.src.lastIndexOf("/")+1,-5);
+	const regex = /\/\d+/g;
+	var numberSubtract = --number;
+	img.src = img.src.replace(regex, "/" + numberSubtract);
+}
 
 var add = document.getElementById('add')
 var remove = document.getElementById('remove')
@@ -87,37 +74,19 @@ add.addEventListener('click', function (e) {
 })
 remove.addEventListener('click', function (e) {
 	text.value = parseInt(text.value) - 1
-	if (text.value < 0) {
-		text.value = 0;
+	if (text.value < 1) {
+		text.value = 1;
 	}
 })
 /* Function to open navigation menu */
-/* Function to delete cart text 'empty cart' when cart items are > 0 */
-
-function cartTx() {
-	cartItem.classList.remove("open-cart");
-	emptyCartTxt.classList.add("open-cart");
-}
-
-/* Function to delete cart text cart item  */
-function emptyCart() {
-	cartItem.classList.remove("open-cart");
-	emptyCartTxt.classList.remove("open-cart");
-}
 
 /*//////////////////////
  Event Listeners 
  /////////////////////*/
 
-/*  Eventlistener to close and open cart   */
 
 
 
-
-/*  Eventlistener for add to cart button  */
-
-
-/*  Eventlistener for delete cart item button   */
 
 
 /*  Eventlistener for  image to change when image button is clicked  */
@@ -134,6 +103,11 @@ window.addEventListener("load", function () {
 });
 
 
-//Buy 
 
 
+
+function imgError(image) {
+    image.onerror = nil;
+	image.classList.add("hide")
+    return true;
+}

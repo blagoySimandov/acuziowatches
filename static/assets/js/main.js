@@ -403,14 +403,6 @@
 
 
         // Search Toggle
-        $("#search_input_box").hide();
-        $("#search_1").on("click", function () {
-          $("#search_input_box").slideToggle();
-          $("#search_input").focus();
-        });
-        $("#close_search").on("click", function () {
-          $('#search_input_box').slideUp(500);
-        });
 
         //------- Mailchimp js --------//  
         function mailChimp() {
@@ -536,3 +528,34 @@
     });
 
 })(jQuery);
+
+
+//custom order
+
+function orderNav(){
+  const urlParams = new URLSearchParams(window.location.search);
+  const order = urlParams.get('order');
+  switch (order) {
+    case "HtoL":
+      document.getElementById("HtoL").classList.add("active")
+      document.getElementById("LtoH").classList.remove("active")
+      document.getElementById("new").classList.remove("active")
+      break;
+    case "LtoH":
+      document.getElementById("HtoL").classList.remove("active")
+      document.getElementById("LtoH").classList.add("active")
+      document.getElementById("new").classList.remove("active")
+      break;
+    default :
+      document.getElementById("HtoL").classList.remove("active")
+      document.getElementById("LtoH").classList.remove("active")
+      document.getElementById("new").classList.add("active")
+
+  }
+}
+
+$(function(){
+  if($('body').is('.shop')){
+    orderNav()
+  }
+});

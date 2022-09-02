@@ -3,25 +3,19 @@
   <td>
     <div class="media">
       <div class="d-flex">
-        <img src="assets/img/gallery/card1.png" alt="" />
+        <img src="/assets/img/watches/{{.Pr.Name}}/1.webp" alt="" />
       </div>
       <div class="media-body">
-        <p>{{.Name}}</p>
+        <p>{{.Pr.Name}}</p>
       </div>
     </div>
   </td>
   <td>
-    <h5>{{.Price}}</h5>
+    <h5>{{.Pr.Currency}} {{.Pr.Price}}</h5>
   </td>
   <td>
-    <div class="product_count">
-      <span class="input-number-decrement"> <i class="ti-minus"></i></span>
-      <input class="input-number" type="text" value="1" min="0" max="10">
-      <span class="input-number-increment"> <i class="ti-plus"></i></span>
-    </div>
-  </td>
-  <td>
-    <h5>$34</h5>
-  </td>
+    <h5>{{.Count}}</h5>
+  </td> 
+  <td><h5>{{.Pr.Currency}} {{.Subtotal}}</h5></td>
 </tr>
 {{end}}

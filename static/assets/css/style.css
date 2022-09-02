@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css?family=Josefin+Sans:200,300,400,500,600,700|Roboto:100,300,400,500,700&display=swap");
 
+:root {
+    --btn-color: navy;
+}
+
 .white-bg {
     background: #ffffff
 }
@@ -2214,41 +2218,41 @@ input:focus::-moz-placeholder {
 }
 
 .section-padding30 {
-    padding-top: 200px;
-    padding-bottom: 170px
+    padding-top: 50px;
+    padding-bottom: 45px
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1600px) {
     .section-padding30 {
-        padding-top: 200px;
-        padding-bottom: 170px
+        padding-top: 50px;
+        padding-bottom: 45px
     }
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
     .section-padding30 {
-        padding-top: 150px;
-        padding-bottom: 120px
+        padding-top: 40px;
+        padding-bottom: 35px
     }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .section-padding30 {
-        padding-top: 100px;
-        padding-bottom: 70px
+        padding-top: 40px;
+        padding-bottom: 35px
     }
 }
 
 @media only screen and (min-width: 576px) and (max-width: 767px) {
     .section-padding30 {
-        padding-top: 60px;
+        padding-top: 30px;
         padding-bottom: 28px
     }
 }
 
 @media (max-width: 575px) {
     .section-padding30 {
-        padding-top: 60px;
+        padding-top: 30px;
         padding-bottom: 28px
     }
 }
@@ -2328,41 +2332,41 @@ input:focus::-moz-placeholder {
 }
 
 .latest-padding {
-    padding-top: 190px;
+    padding-top: 90px;
     padding-bottom: 135px
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1600px) {
     .latest-padding {
-        padding-top: 190px;
+        padding-top: 90px;
         padding-bottom: 135px
     }
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
     .latest-padding {
-        padding-top: 190px;
+        padding-top: 90px;
         padding-bottom: 135px
     }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .latest-padding {
-        padding-top: 60px;
+        padding-top: 30px;
         padding-bottom: 5px
     }
 }
 
 @media only screen and (min-width: 576px) and (max-width: 767px) {
     .latest-padding {
-        padding-top: 60px;
+        padding-top: 30px;
         padding-bottom: 5px
     }
 }
 
 @media (max-width: 575px) {
     .latest-padding {
-        padding-top: 60px;
+        padding-top: 30px;
         padding-bottom: 5px
     }
 }
@@ -2866,7 +2870,7 @@ input:focus {
 }
 
 .header-area .main-header .menu-wrapper .main-menu ul li a {
-    font-size: 16px;
+    font-size: 20px;
     font-family: "Josefin Sans", sans-serif;
     color: #141517;
     font-weight: 600;
@@ -4297,7 +4301,7 @@ input:focus {
 }
 
 .best-collection-area .best-right-cap .best-single .single-cap.active {
-    background: #2577fd;
+    background: var(--btn-color);
     padding: 10px 30px;
     border-radius: 10px
 }
@@ -4397,7 +4401,7 @@ input:focus {
 
 .latest-wrapper .latest-area .latest-subscribe form button {
     padding: 20px 47px;
-    background: #2577fd;
+    background: var(--btn-color);
     font-size: 14px;
     font-weight: 300;
     position: absolute;
@@ -7427,8 +7431,8 @@ del {
     display: inline-block;
     padding: 17px 50px;
     border-radius: 5px;
-    background-color: #2577fd;
-    border: 2px solid #2577fd;
+    background-color: var(--btn-color);
+    border: 2px solid var(--btn-color);
     font-size: 15px;
     font-weight: 500;
     -webkit-transition: 0.5s;
@@ -7447,10 +7451,10 @@ del {
     padding: 18px 36px;
     border-radius: 5px;
     background-color: transparent;
-    border: 1px solid #2577fd;
+    border: 1px solid var(--btn-color);
     font-size: 15px;
     font-weight: 700;
-    color: #2577fd;
+    color: var(--btn-color);
     text-transform: uppercase;
     font-weight: 400;
     -webkit-transition: .5s;
@@ -7460,7 +7464,7 @@ del {
 }
 
 .btn_3:hover {
-    background-color: #2577fd;
+    background-color: var(--btn-color);
     color: #fff
 }
 
@@ -7483,7 +7487,7 @@ del {
 
 .btn_2:hover {
     color: #fff !important;
-    background-color: #2577fd
+    background-color: var(--btn-color)
 }
 
 @media (max-width: 991px) {
@@ -8058,7 +8062,7 @@ input:focus {
 }
 
 .single_product_item h3 a:hover {
-    color: #2577fd
+    color: var(--btn-color)
 }
 
 .single_product_item p {
@@ -8417,7 +8421,7 @@ input:focus {
     line-height: 60px;
     padding: 0px 45px;
     border: 0px solid transparent;
-    background-color: #2577fd;
+    background-color: var(--btn-color);
     color: #fff;
     font-size: 14px;
     font-weight: 500;
@@ -8456,7 +8460,7 @@ input:focus {
 }
 
 .best_seller .single_product_item .single_product_text a {
-    color: #2577fd;
+    color: var(--btn-color);
     text-transform: uppercase;
     font-size: 18px;
     font-weight: 500;
@@ -8585,7 +8589,7 @@ input:focus {
 
 .single-product .product-img .p_icon a:hover {
     color: #fff;
-    background: #2577fd
+    background: var(--btn-color)
 }
 
 .single-product .product-btm {
@@ -8625,7 +8629,7 @@ input:focus {
 }
 
 .single-product:hover .product-btm h4 {
-    color: #2577fd
+    color: var(--btn-color)
 }
 
 .new_product {
@@ -8824,8 +8828,8 @@ input:focus {
 
 .p_filter_widgets .list li.active a:before,
 .p_filter_widgets .list li:hover a:before {
-    background: #2577fd;
-    border-color: #2577fd
+    background: var(--btn-color);
+    border-color: var(--btn-color)
 }
 
 .p_filter_widgets .list li:last-child {
@@ -8952,7 +8956,7 @@ input:focus {
 }
 
 .product_top_bar .single_product_menu p span {
-    color: #2577fd
+    color: var(--btn-color)
 }
 
 .product_top_bar .single_product_menu h5 {
@@ -9167,7 +9171,7 @@ input:focus {
 .s_product_text h2 {
     font-size: 24px;
     font-weight: bold;
-    color: #2577fd;
+    color: var(--btn-color);
     margin-bottom: 15px
 }
 
@@ -9192,7 +9196,7 @@ input:focus {
 }
 
 .s_product_text .list li a.active {
-    color: #2577fd
+    color: var(--btn-color)
 }
 
 .s_product_text .list li a.active span {
@@ -9336,9 +9340,9 @@ input:focus {
 }
 
 .product_description_area .nav.nav-tabs li a.active {
-    background: #2577fd;
+    background: var(--btn-color);
     color: #fff;
-    border-color: #2577fd
+    border-color: var(--btn-color)
 }
 
 .product_description_area .tab-content {
@@ -9354,7 +9358,7 @@ input:focus {
 }
 
 .product_description_area .tab-content .total_rate .box_total h4 {
-    color: #2577fd;
+    color: var(--btn-color);
     font-size: 48px;
     font-weight: bold
 }
@@ -9480,8 +9484,8 @@ input:focus {
 }
 
 .review_item .media .media-body .reply_btn:hover {
-    background: #2577fd;
-    border-color: #2577fd;
+    background: var(--btn-color);
+    border-color: var(--btn-color);
     color: #fff
 }
 
@@ -9748,7 +9752,7 @@ input:focus {
     height: 10px;
     width: 10px;
     border-radius: 50%;
-    background: #2577fd;
+    background: var(--btn-color);
     display: inline-block;
     position: absolute;
     right: 3px;
@@ -9871,7 +9875,7 @@ input:focus {
 }
 
 .check_title h2 a {
-    color: #2577fd;
+    color: var(--btn-color);
     text-decoration: underline
 }
 
@@ -10042,9 +10046,9 @@ input:focus {
 }
 
 .tp_btn:hover {
-    background: #2577fd;
+    background: var(--btn-color);
     color: #fff;
-    border-color: #2577fd
+    border-color: var(--btn-color)
 }
 
 .billing_details h3 {
@@ -10113,7 +10117,7 @@ input:focus {
 }
 
 .billing_details .contact_form .form-group .creat_account a {
-    color: #2577fd
+    color: var(--btn-color)
 }
 
 .order_box {
@@ -10217,8 +10221,8 @@ input:focus {
 }
 
 .order_box .payment_item.active h4:before {
-    background: #2577fd;
-    border-color: #2577fd
+    background: var(--btn-color);
+    border-color: var(--btn-color)
 }
 
 .order_box .creat_account {
@@ -10232,7 +10236,7 @@ input:focus {
 }
 
 .order_box .creat_account a {
-    color: #2577fd
+    color: var(--btn-color)
 }
 
 .order_box .btn_3 {
@@ -10382,8 +10386,8 @@ input:focus {
 }
 
 .radion_btn input[type="radio"]:checked~.check {
-    border: 1px solid #2577fd;
-    background: #2577fd
+    border: 1px solid var(--btn-color);
+    background: var(--btn-color)
 }
 
 .radion_btn input[type="radio"]:checked~.check::before {
@@ -10580,7 +10584,7 @@ input:focus {
 }
 
 .s_product_text .like_us:hover {
-    background-color: #2577fd;
+    background-color: var(--btn-color);
     color: #fff
 }
 
@@ -10589,7 +10593,7 @@ input:focus {
 }
 
 .s_product_text .btn_3:hover {
-    color: #2577fd;
+    color: var(--btn-color);
     background-color: #fff;
     box-shadow: -14.142px 14.142px 20px 0px rgba(0, 0, 0, 0.1);
     border: 1px solid #fff
@@ -10628,7 +10632,7 @@ input:focus {
 }
 
 .card_area .social_icon a:hover {
-    background-color: #2577fd
+    background-color: var(--btn-color)
 }
 
 .card_area .social_icon .tw {
@@ -10644,7 +10648,7 @@ input:focus {
 }
 
 .cart_area .btn_1:hover {
-    border: 1px solid #2577fd !important
+    border: 1px solid var(--btn-color) !important
 }
 
 .arrival_tittle,
@@ -10771,7 +10775,7 @@ input:focus {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: #2577fd;
+    background-color: var(--btn-color);
     opacity: 0;
     -webkit-transition: .5s;
     transition: .5s;
@@ -10847,7 +10851,7 @@ input:focus {
 }
 
 .new_arrival .single_arrivel_item .hover_text .social_icon a:hover {
-    background-color: #2577fd;
+    background-color: var(--btn-color);
     color: #fff
 }
 
@@ -10875,7 +10879,7 @@ input:focus {
 .new_arrival .active {
     position: relative;
     z-index: 1;
-    color: #2577fd
+    color: var(--btn-color)
 }
 
 .new_arrival .active:after {
@@ -10885,7 +10889,7 @@ input:focus {
     bottom: 0;
     width: 100%;
     height: 2px;
-    background-color: #2577fd
+    background-color: var(--btn-color)
 }
 
 .shipping_details {
@@ -10961,7 +10965,7 @@ input:focus {
     height: 100%;
     left: 0;
     top: 0;
-    background-color: #2577fd;
+    background-color: var(--btn-color);
     opacity: 0;
     visibility: hidden;
     z-index: 1;

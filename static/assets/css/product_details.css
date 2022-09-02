@@ -556,6 +556,7 @@ body {
     background: none;
     cursor: pointer;
     height: 100%;
+    filter: invert(9%) sepia(51%) saturate(5706%) hue-rotate(238deg) brightness(0%) contrast(135%);
 }
 
 .price-btn_txt {
@@ -693,10 +694,15 @@ input:focus {
         border: none;
         border-radius: 100px;
         cursor: pointer;
+        transition: all 1s;
+        transform-origin: 50% 50%;
     }
 
-    .img-main__btn:hover .img-main__btn-img {
-        filter: invert(52%) sepia(14%) saturate(3126%) hue-rotate(344deg) brightness(107%) contrast(102%);
+    .img-main__btnrgt:hover .img-main__btn-img {
+        transform: scale(1.2)
+    }
+    .img-main__btnlft:hover .img-main__btn-img {
+        transform: scale(1.2) rotate(180deg)
     }
 
     .img-main__btnlft {
@@ -848,4 +854,7 @@ input:focus {
 
 .preload * {
     transition: none !important;
+}
+.hide {
+    display: none;
 }

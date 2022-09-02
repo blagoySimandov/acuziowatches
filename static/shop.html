@@ -24,7 +24,7 @@
         <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
-<body>
+<body class="shop">
     <!--? Preloader Start -->
     <div id="preloader-active">
         <div class="preloader d-flex align-items-center justify-content-center">
@@ -53,16 +53,15 @@
                                 <ul id="navigation">  
                                     <li><a href="/">Home</a></li>
                                     <li><a href="shop">shop</a></li>
-                                    <li><a href="about.html">about</a></li>
-                                    <li><a href="product_details.html"> Product Details</a></li>
-                                    <li><a href="contact.html">Contact</a></li>
+                                    <li><a href="/about">about</a></li>
+                                    <li><a href="/contact">Contact</a></li>
                                 </ul>
                             </nav>
                         </div>
                         <!-- Header Right -->
                         <div class="header-right">
                             <ul>
-                                <li><a href="cart.html"><span class="flaticon-shopping-cart"></span></a> </li>
+                                <li><a href="/cart"><span class="flaticon-shopping-cart"></span></a> </li>
                             </ul>
                         </div>
                     </div>
@@ -99,9 +98,9 @@
                         <!--Nav Button  -->
                         <nav>                                                      
                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">NewestArrivals</a>
-                                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false"> Price high to low</a>
-                                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false"> Most populer </a>
+                                <a class="nav-item nav-link active"  href="/shop" role="tab" id="new" aria-selected="true">Newest Arrivals</a>
+                                <a class="nav-item nav-link"   href="/shop?order=HtoL" role="tab" id="HtoL" aria-selected="false" onclick="order(this);"> Price: High to Low</a>
+                                <a class="nav-item nav-link"   href="/shop?order=LtoH" role="tab" id="LtoH" aria-selected="false" onclick="order(this);"> Price: Low to High</a>
                             </div>
                         </nav>
                         <!--End Nav Button  -->
@@ -110,7 +109,7 @@
                     <div class="grid-list-view">
                     </div>
                     <!-- Select items -->
-                    <div class="select-this">
+                    <div class="select-this" style="display: none;">
                         <form action="#">
                             <div class="select-itms">
                                 <select name="select" id="select1">
@@ -150,11 +149,11 @@
                             <div class="single-footer-caption mb-30">
                                 <!-- logo -->
                                 <div class="footer-logo">
-                                    <a href="/"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
+                                    <a href="index.html"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
                                 </div>
                                 <div class="footer-tittle">
                                     <div class="footer-pera">
-                                        <p>Acuzio is a brand that specializes in quality and frugility. We want to offer our customers the best watches for the best price.</p>
+                                        <p>We at Acuzio bring you quality watches for affordable prices. We believe that everyone has the right to dress sharp.</p>
                                 </div>
                                 </div>
                             </div>
@@ -165,15 +164,56 @@
                             <div class="footer-tittle">
                                 <h4>Quick Links</h4>
                                 <ul>
-                                    <li><a href="about.html">About</a></li>
-                                    <li><a href="contact.html">  Contact Us</a></li>
+                                    <li><a href="/about">About</a></li>
+                                    <li><a href="/shop"> Shop</a></li>
+                                    <li><a href="/contact"> Contact</a></li>
+                                    <li><a href="/cart">Your Cart</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-7">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>Our favourite products</h4>
+                                <ul>
+                                    <li><a href="/product/0">Men's Watch of Choice</a></li>
+                                    <li><a href="/product/1">Women's Watch of Choice</a></li>
+                                    <li><a href="/product/2">Most popular</a></li>
+                                    <li><a href="/product/3">Newest Arrival</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-5 col-sm-7">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>Support</h4>
+                                <ul>
+                                    <li><a href="mailto: acuzio@acuzio.store">Email: acuzio@acuzio.store</a></li>
+                                    <li><a href="/contact">Contact us Directly</a></li>
+                                    <li><a href="/contact">Report a Payment Issue</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- Footer bottom -->
-             
+                    <div class="col-xl-5 col-lg-4 col-md-5">
+                        <div class="footer-copy-right f-right">
+                            <!-- social -->
+                            <div class="footer-social">
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="https://www.facebook.com/sai4ull"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-behance"></i></a>
+                                <a href="#"><i class="fas fa-globe"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End-->
     </footer>
     <!--? Search model Begin -->
     <div class="search-model-box">

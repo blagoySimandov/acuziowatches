@@ -33,47 +33,22 @@
                   <div class="menu-wrapper">
                       <!-- Logo -->
                       <div class="logo">
-                          <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+                          <a href="/"><img src="assets/img/logo/logo.png" alt=""></a>
                       </div>
                       <!-- Main-menu -->
                       <div class="main-menu d-none d-lg-block">
                           <nav>                                                
                               <ul id="navigation">  
-                                  <li><a href="index.html">Home</a></li>
-                                  <li><a href="shop.html">shop</a></li>
-                                  <li><a href="about.html">about</a></li>
-                                  <li class="hot"><a href="#">Latest</a>
-                                      <ul class="submenu">
-                                          <li><a href="shop.html"> Product list</a></li>
-                                          <li><a href="product_details.html"> Product Details</a></li>
-                                      </ul>
-                                  </li>
-                                  <li><a href="blog.html">Blog</a>
-                                      <ul class="submenu">
-                                          <li><a href="blog.html">Blog</a></li>
-                                          <li><a href="blog-details.html">Blog Details</a></li>
-                                      </ul>
-                                  </li>
-                                  <li><a href="#">Pages</a>
-                                      <ul class="submenu">
-                                          <li><a href="login.html">Login</a></li>
-                                          <li><a href="cart.html">Cart</a></li>
-                                          <li><a href="elements.html">Element</a></li>
-                                      </ul>
-                                  </li>
-                                  <li><a href="contact.html">Contact</a></li>
+                                  <li><a href="/">Home</a></li>
+                                  <li><a href="/shop">shop</a></li>
+                                  <li><a href="/about"> About</a></li>
+                                  <li><a href="/contact">Contact</a></li>
                               </ul>
                           </nav>
                       </div>
                       <!-- Header Right -->
                       <div class="header-right">
                           <ul>
-                              <li>
-                                  <div class="nav-search search-switch">
-                                      <span class="flaticon-search"></span>
-                                  </div>
-                              </li>
-                              <li> <a href="login.html"><span class="flaticon-user"></span></a></li>
                               <li><a href="cart.html"><span class="flaticon-shopping-cart"></span></a> </li>
                           </ul>
                       </div>
@@ -113,96 +88,84 @@
                       <th scope="col">Product</th>
                       <th scope="col">Price</th>
                       <th scope="col">Quantity</th>
-                      <th scope="col">Total</th>
+                      <th scope="col">Subtotal</th>
                     </tr>
                   </thead>
                   <tbody>
 
-
-                    {{range $id,$el := .Products}}
-                      {{if .Count gt 0}}
-                        {{template "ProductCart" $el}}
-                      <!-- {{else}}
-                        <tr>
-                          <td>
-                            <span>No Items in Cart</span>
-                          </td>
-                        </tr> -->
-                        {{end}}
-
+                    {{if .Products}}
+                      {{range $id,$el := .Products}}
+                          {{template "ProductCart" $el}}
+                      {{end}}
+                    {{else}}
+                      <tr>
+                        <td>
+                          <span>No Items in Cart</span>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
                     {{end}}
-
-                    <tr class="bottom_button">
-                      <td>
-                        <a class="btn_1" href="#">Update Cart</a>
-                      </td>
-                      <td></td>
-                      <td></td>
-                      <td>
-                        <div class="cupon_text float-right">
-                          <a class="btn_1" href="#">Close Coupon</a>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td>
-                        <h5>Subtotal</h5>
-                      </td>
-                      <td>
-                        <h5>$90</h5>
-                      </td>
-                    </tr>
-                    <tr class="shipping_area">
-                      <td></td>
-                      <td></td>
-                      <td>
-                        <h5>Shipping</h5>
-                      </td>
-                      <td>
-                        <div class="shipping_box">
-                          <ul class="list">
-                            <li>
-                              Flat Rate: $5.00
-                              <input type="radio" aria-label="Radio button for following text input">
-                            </li>
-                            <li>
-                              Free Shipping
-                              <input type="radio" aria-label="Radio button for following text input">
-                            </li>
-                            <li>
-                              Flat Rate: $10.00
-                              <input type="radio" aria-label="Radio button for following text input">
-                            </li>
-                            <li class="active">
-                              Local Delivery: $2.00
-                              <input type="radio" aria-label="Radio button for following text input">
-                            </li>
-                          </ul>
-                          <h6>
-                            Calculate Shipping
-                            <i class="fa fa-caret-down" aria-hidden="true"></i>
-                          </h6>
-                          <select class="shipping_select">
-                            <option value="1">Bangladesh</option>
-                            <option value="2">India</option>
-                            <option value="4">Pakistan</option>
-                          </select>
-                          <select class="shipping_select section_bg">
-                            <option value="1">Select a State</option>
-                            <option value="2">Select a State</option>
-                            <option value="4">Select a State</option>
-                          </select>
-                          <input class="post_code" type="text" placeholder="Postcode/Zipcode" />
-                          <a class="btn_1" href="#">Update Details</a>
-                        </div>
-                      </td>
-                    </tr>
+                  {{if .Products}}
+                    <div id="orderInformation">
+                      <tr>
+                        <td><h5>Total</h5></td>
+                        <td><h5>$90</h5></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr class="shipping_area">
+                        <td></td>
+                        <td></td>
+                        <td>
+                          <h5>Shipping</h5>
+                        </td>
+                        <td>
+                          <div class="shipping_box">
+                            <ul class="list">
+                              <li>
+                                Flat Rate: $5.00
+                                <input type="radio" aria-label="Radio button for following text input">
+                              </li>
+                              <li>
+                                Free Shipping
+                                <input type="radio" aria-label="Radio button for following text input">
+                              </li>
+                              <li>
+                                Flat Rate: $10.00
+                                <input type="radio" aria-label="Radio button for following text input">
+                              </li>
+                              <li class="active">
+                                Local Delivery: $2.00
+                                <input type="radio" aria-label="Radio button for following text input">
+                              </li>
+                            </ul>
+                            <h6>
+                              Calculate Shipping
+                              <i class="fa fa-caret-down" aria-hidden="true"></i>
+                            </h6>
+                            <select class="shipping_select">
+                              <option value="1">Bangladesh</option>
+                              <option value="2">India</option>
+                              <option value="4">Pakistan</option>
+                            </select>
+                            <select class="shipping_select section_bg">
+                              <option value="1">Select a State</option>
+                              <option value="2">Select a State</option>
+                              <option value="4">Select a State</option>
+                            </select>
+                            <input class="post_code" type="text" placeholder="Postcode/Zipcode" />
+                            <a class="btn_1" href="#">Update Details</a>
+                          </div>
+                        </td>
+                      </tr>
+                    </div>
+                    {{end}}
                   </tbody>
                 </table>
                 <div class="checkout_btn_inner float-right">
-                  <a class="btn_1" href="#">Continue Shopping</a>
+                  <a class="btn_1" href="/shop">Continue Shopping</a>
                   <a class="btn_1 checkout_btn_1" href="#">Proceed to checkout</a>
                 </div>
               </div>
@@ -211,90 +174,81 @@
         <!--================End Cart Area =================-->
     </main>>
     <footer>
-        <!-- Footer Start-->
-        <div class="footer-area footer-padding">
-            <div class="container">
-                <div class="row d-flex justify-content-between">
-                    <div class="col-xl-3 col-lg-3 col-md-5 col-sm-6">
-                        <div class="single-footer-caption mb-50">
-                            <div class="single-footer-caption mb-30">
-                                <!-- logo -->
-                                <div class="footer-logo">
-                                    <a href="index.html"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
-                                </div>
-                                <div class="footer-tittle">
-                                    <div class="footer-pera">
-                                        <p>Asorem ipsum adipolor sdit amet, consectetur adipisicing elitcf sed do eiusmod tem.</p>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-2 col-lg-3 col-md-3 col-sm-5">
-                        <div class="single-footer-caption mb-50">
-                            <div class="footer-tittle">
-                                <h4>Quick Links</h4>
-                                <ul>
-                                    <li><a href="#">About</a></li>
-                                    <li><a href="#"> Offers & Discounts</a></li>
-                                    <li><a href="#"> Get Coupon</a></li>
-                                    <li><a href="#">  Contact Us</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-7">
-                        <div class="single-footer-caption mb-50">
-                            <div class="footer-tittle">
-                                <h4>New Products</h4>
-                                <ul>
-                                    <li><a href="#">Woman Cloth</a></li>
-                                    <li><a href="#">Fashion Accessories</a></li>
-                                    <li><a href="#"> Man Accessories</a></li>
-                                    <li><a href="#"> Rubber made Toys</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-5 col-sm-7">
-                        <div class="single-footer-caption mb-50">
-                            <div class="footer-tittle">
-                                <h4>Support</h4>
-                                <ul>
-                                    <li><a href="#">Frequently Asked Questions</a></li>
-                                    <li><a href="#">Terms & Conditions</a></li>
-                                    <li><a href="#">Privacy Policy</a></li>
-                                    <li><a href="#">Report a Payment Issue</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Footer bottom -->
-                <div class="row align-items-center">
-                    <div class="col-xl-7 col-lg-8 col-md-7">
-                        <div class="footer-copy-right">
-                            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>                 
-                        </div>
-                    </div>
-                    <div class="col-xl-5 col-lg-4 col-md-5">
-                        <div class="footer-copy-right f-right">
-                            <!-- social -->
-                            <div class="footer-social">
-                                <a href="#"><i class="fab fa-twitter"></i></a>
-                                <a href="https://www.facebook.com/sai4ull"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#"><i class="fab fa-behance"></i></a>
-                                <a href="#"><i class="fas fa-globe"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Footer End-->
-    </footer>
+      <!-- Footer Start-->
+      <div class="footer-area footer-padding">
+          <div class="container">
+              <div class="row d-flex justify-content-between">
+                  <div class="col-xl-3 col-lg-3 col-md-5 col-sm-6">
+                      <div class="single-footer-caption mb-50">
+                          <div class="single-footer-caption mb-30">
+                              <!-- logo -->
+                              <div class="footer-logo">
+                                  <a href="index.html"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
+                              </div>
+                              <div class="footer-tittle">
+                                  <div class="footer-pera">
+                                      <p>We at Acuzio bring you quality watches for affordable prices. We believe that everyone has the right to dress sharp.</p>
+                              </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-xl-2 col-lg-3 col-md-3 col-sm-5">
+                      <div class="single-footer-caption mb-50">
+                          <div class="footer-tittle">
+                              <h4>Quick Links</h4>
+                              <ul>
+                                  <li><a href="/about">About</a></li>
+                                  <li><a href="/shop"> Shop</a></li>
+                                  <li><a href="/contact"> Contact</a></li>
+                                  <li><a href="/cart">Your Cart</a></li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-xl-3 col-lg-3 col-md-4 col-sm-7">
+                      <div class="single-footer-caption mb-50">
+                          <div class="footer-tittle">
+                              <h4>Our favourite products</h4>
+                              <ul>
+                                  <li><a href="/product/0">Men's Watch of Choice</a></li>
+                                  <li><a href="/product/1">Women's Watch of Choice</a></li>
+                                  <li><a href="/product/2">Most popular</a></li>
+                                  <li><a href="/product/3">Newest Arrival</a></li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-xl-3 col-lg-3 col-md-5 col-sm-7">
+                      <div class="single-footer-caption mb-50">
+                          <div class="footer-tittle">
+                              <h4>Support</h4>
+                              <ul>
+                                  <li><a href="mailto: acuzio@acuzio.store">Email: acuzio@acuzio.store</a></li>
+                                  <li><a href="/contact">Contact us Directly</a></li>
+                                  <li><a href="/contact">Report a Payment Issue</a></li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <!-- Footer bottom -->
+                  <div class="col-xl-5 col-lg-4 col-md-5">
+                      <div class="footer-copy-right f-right">
+                          <!-- social -->
+                          <div class="footer-social">
+                              <a href="#"><i class="fab fa-twitter"></i></a>
+                              <a href="https://www.facebook.com/sai4ull"><i class="fab fa-facebook-f"></i></a>
+                              <a href="#"><i class="fab fa-behance"></i></a>
+                              <a href="#"><i class="fas fa-globe"></i></a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- Footer End-->
+  </footer>
     <!--? Search model Begin -->
     <div class="search-model-box">
         <div class="h-100 d-flex align-items-center justify-content-center">

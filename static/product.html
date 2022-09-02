@@ -69,8 +69,8 @@
                             <ul id="navigation">  
                                 <li><a href="/">Home</a></li>
                                 <li><a href="/shop">shop</a></li>
-                                <li><a href="/about.html">about</a></li>
-                                <li><a href="/contact.html">Contact</a></li>
+                                <li><a href="/about">about</a></li>
+                                <li><a href="/contact">Contact</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -99,27 +99,29 @@
     <!-- Main item container -->
     <main class="item">
       <section class="img">
-        <button class="img-main__btnlft img-main__btn">
+        <button class="img-main__btnlft img-main__btn" onclick="leftBtn()">
           <img
             src="/assets/img/icon-next.svg"
             alt="next symbol image"
             class="img-main__btnlft-img img-main__btn-img"
           />
         </button>
-        <button class="img-main__btnrgt img-main__btn">
+        <button class="img-main__btnrgt img-main__btn" onclick="rightBtn()">
           <img
             src="/assets/img/icon-next.svg"
             alt="next symbol image"
             class="img-main__btnrgt-img img-main__btn-img"
+    
           />
         </button>
-        <img src="/assets/img/watches/{{.Name}}/1.webp" alt="" class="img-main" />
+        <img src="/assets/img/watches/{{.Name}}/1.webp" alt="" class="img-main" onerror="mainImgError(this);"/>
         <div class="img-btns">
             <button class="img-btn">
               <img
                 src="/assets/img/watches/{{.Name}}/1.webp"
                 alt="shoe product image"
                 class="img-btn__img"
+                onerror="this.style.display='none'"
               />
         <div class="img-btns">
           <button class="img-btn">
@@ -127,6 +129,7 @@
               src="/assets/img/watches/{{.Name}}/2.webp"
               alt="shoe product image"
               class="img-btn__img"
+              onerror="this.style.display='none'"
             />
           </button>
           <button class="img-btn">
@@ -134,6 +137,7 @@
               src="/assets/img/watches/{{.Name}}/3.webp"
               alt="shoe product image"
               class="img-btn__img"
+              onerror="this.style.display='none'"
             />
           </button>
           <button class="img-btn">
@@ -141,6 +145,7 @@
               src="/assets/img/watches/{{.Name}}/4.webp"
               alt="shoe product image"
               class="img-btn__img"
+              onerror="ithis.style.display='none'"
             />
           </button>
           <button class="img-btn">
@@ -148,6 +153,7 @@
               src="/assets/img/watches/{{.Name}}/5.webp"
               alt="shoe product image"
               class="img-btn__img"
+              onerror="this.style.display='none'"
             />
           </button>
         </div>
@@ -176,7 +182,7 @@
                 class="price-btn__add-img price-btn__img"
               />
             </button>
-            <input id="count" class="price-btn_txt" type="number" value="0" min="1" name="count" readonly>
+            <input id="count" class="price-btn_txt" type="number" value="1" min="1" name="count" readonly>
             <button id="remove" type="button" class="price-btn__remove price-btn">
               <img
                 src="/assets/img/icon-minus.svg"
@@ -197,7 +203,7 @@
         </form>
       </section>
     </main>
-
+    
     <!-- Attribution -->
   </body>
 </html>
