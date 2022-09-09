@@ -172,25 +172,8 @@
     if(nice_Select.length){
       nice_Select.niceSelect();
     }
-
+    $(".header-sticky").addClass("sticky-bar");
 /* 7.  Custom Sticky Menu  */
-    $(window).on('scroll', function () {
-      var scroll = $(window).scrollTop();
-      if (scroll < 245) {
-        $(".header-sticky").removeClass("sticky-bar");
-      } else {
-        $(".header-sticky").addClass("sticky-bar");
-      }
-    });
-
-    $(window).on('scroll', function () {
-      var scroll = $(window).scrollTop();
-      if (scroll < 245) {
-          $(".header-sticky").removeClass("sticky");
-      } else {
-          $(".header-sticky").addClass("sticky");
-      }
-    });
 
 
 
@@ -217,13 +200,6 @@
     new WOW().init();
 
 /* 11. Datepicker */
-    
-// 11. ---- Mailchimp js --------//  
-    function mailChimp() {
-      $('#mc_embed_signup').find('form').ajaxChimp();
-    }
-    mailChimp();
-
 
 // 12 Pop Up Img
     var popUp = $('.single_gallery_part, .img-pop-up');
@@ -405,11 +381,6 @@
         // Search Toggle
 
         //------- Mailchimp js --------//  
-        function mailChimp() {
-          $('#mc_embed_signup').find('form').ajaxChimp();
-        }
-        mailChimp();
-
         //------- makeTimer js --------//  
         function makeTimer() {
 
@@ -530,7 +501,7 @@
 })(jQuery);
 
 
-//custom order
+//custom order//sort
 
 function orderNav(){
   const urlParams = new URLSearchParams(window.location.search);
@@ -559,3 +530,18 @@ $(function(){
     orderNav()
   }
 });
+
+$(window).bind("resize",function(){
+  if($(window).width() <1367){
+    $('.main-header').removeClass('sticky-bar')
+    $('.main-header').removeClass('header-area')
+    } else {
+      $('.main-header').addClass('sticky-bar')
+      $('.main-header').add('header-area')
+    }
+})
+
+if($(window).width() <1367){
+  $('.main-header').removeClass('sticky-bar')
+  $('.main-header').removeClass('header-area')
+  }

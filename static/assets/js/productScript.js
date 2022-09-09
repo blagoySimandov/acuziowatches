@@ -37,7 +37,7 @@ const headerCart = document.querySelector(".head-rgt");
 /*Function to stop transition animation from triggering when page resize and reloading  */
 /* Function to get next and previous images*/
 function rightBtn(){
-	console.log(img.src)
+
 	var number = img.src.slice(img.src.lastIndexOf("/")+1,-5);
 	var numberAdd = ++number;
 	const regex = /\/\d+/g;
@@ -92,7 +92,6 @@ remove.addEventListener('click', function (e) {
 /*  Eventlistener for  image to change when image button is clicked  */
 imgBtn.forEach((btn, i) => {
 	btn.addEventListener("click", function (e) {
-		console.log(e.target.children[0].src)
 		img.src = e.target.children[0].src;
 	});
 });

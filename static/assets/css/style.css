@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css?family=Josefin+Sans:200,300,400,500,600,700|Roboto:100,300,400,500,700&display=swap");
 
+html {
+    overflow-x: hidden;
+}
+
 :root {
     --btn-color: navy;
 }
@@ -314,7 +318,6 @@ input:focus::-moz-placeholder {
 
 .section-padding {
     padding-top: 120px;
-    padding-bottom: 120px
 }
 
 .separator {
@@ -592,7 +595,10 @@ input:focus::-moz-placeholder {
 #scrollUp:hover {
     color: #fff
 }
-
+.unclickable{
+    pointer-events: none;
+    cursor: default;
+}
 .sticky-bar {
     left: 0;
     margin: auto;
@@ -604,14 +610,43 @@ input:focus::-moz-placeholder {
     z-index: 9999;
     -webkit-animation: 300ms ease-in-out 0s normal none 1 running fadeInDown;
     animation: 300ms ease-in-out 0s normal none 1 running fadeInDown;
-    -webkit-box-shadow: 0 10px 15px rgba(25, 25, 25, 0.1);
-    background: #fff
+    background: #fff;
+    margin-bottom: 400px;
+}
+.p_star > .error {
+    color: red;
+    font-family: "Josefin Sans", sans-serif
 }
 
+select {
+    display: block !important;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    height: 1px;
+    opacity: 0;
+    position: relative;
+    /* Top should be the same as the height of your */
+    /* unfocused, nice select replacement element! */
+    top: 30px;
+}
+label[for=country]
+{
+    margin-top: 10px;
+    margin-left: 5px;
+}
+
+@media (min-width: 1367px){
+    .header-area {
+        margin-bottom: 100px;
+    }
+}
 .mt-5 {
     margin-top: 5px
 }
-
+li > a > img {
+    margin-top: 3px;
+}
 .mt-10 {
     margin-top: 10px
 }
@@ -2101,6 +2136,7 @@ input:focus::-moz-placeholder {
         padding-top: 100px;
         padding-bottom: 100px
     }
+    
 }
 
 @media only screen and (min-width: 576px) and (max-width: 767px) {
@@ -2372,42 +2408,36 @@ input:focus::-moz-placeholder {
 }
 
 .footer-padding {
-    padding-top: 150px;
-    padding-bottom: 120px
+    padding-top: 70px;
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1600px) {
     .footer-padding {
-        padding-top: 150px;
-        padding-bottom: 120px
+        padding-top: 70px;
     }
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
     .footer-padding {
-        padding-top: 100px;
-        padding-bottom: 70px
+        padding-top: 70px;
     }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .footer-padding {
-        padding-top: 100px;
-        padding-bottom: 70px
+        padding-top: 70x;
     }
 }
 
 @media only screen and (min-width: 576px) and (max-width: 767px) {
     .footer-padding {
         padding-top: 70px;
-        padding-bottom: 70px
     }
 }
 
 @media (max-width: 575px) {
     .footer-padding {
         padding-top: 70px;
-        padding-bottom: 70px
     }
 }
 
@@ -2459,30 +2489,30 @@ input:focus {
 }
 
 .section_padding {
-    padding: 200px 0px
+    padding: 130px 0px
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
     .section_padding {
-        padding: 100px 0px
+        padding: 70px 0px
     }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .section_padding {
-        padding: 70px 0px
+        padding: 60px 0px
     }
 }
 
 @media (max-width: 576px) {
     .section_padding {
-        padding: 70px 0px
+        padding: 60px 0px
     }
 }
 
 @media only screen and (min-width: 480px) and (max-width: 767px) {
     .section_padding {
-        padding: 70px 0px
+        padding: 60px 0px
     }
 }
 
@@ -3915,7 +3945,8 @@ input:focus {
 }
 
 .shop-method-area .method-wrapper {
-    background: #ea0000
+    background: navy;
+    margin-top: 50px;
 }
 
 .shop-method-area .method-wrapper .single-method {
@@ -4521,7 +4552,8 @@ input:focus {
 
 .footer-area .footer-tittle ul li a {
     color: #868c98;
-    font-weight: 300
+    font-weight: 300!important;
+    font-size: 16px!important
 }
 
 .footer-area .footer-tittle ul li a:hover {
@@ -6516,13 +6548,13 @@ del {
 
 .genric-btn.danger {
     color: #fff;
-    background: #f44a40;
+    background: navy;
     border: 1px solid transparent
 }
 
 .genric-btn.danger:hover {
-    color: #f44a40;
-    border: 1px solid #f44a40;
+    color: navy;
+    border: 1px solid navy;
     background: #fff
 }
 
@@ -9976,8 +10008,8 @@ input:focus {
     background: #fff
 }
 
-.p_star input:focus+.placeholder {
-    display: none
+.form-control:focus + .placeholder {
+    display: none;
 }
 
 .p_star .placeholder {
@@ -10089,10 +10121,6 @@ input:focus {
     margin-top: 15px
 }
 
-.billing_details .contact_form .form-group .country_select {
-    width: 100%
-}
-
 .billing_details .contact_form .form-group .country_select span {
     color: #828bb2
 }
@@ -10101,7 +10129,10 @@ input:focus {
     width: 100%;
     border-radius: 0px
 }
-
+.list {
+    max-height: 120px; 
+    overflow-y: scroll !important;
+  }
 .billing_details .contact_form .form-group .country_select .list li {
     font-size: 14px;
     font-family: "Playfair Display", serif;
@@ -10148,13 +10179,15 @@ input:focus {
 
 .order_box .list li a .middle {
     float: none;
-    width: 50px;
+    width: fit-content;
     text-align: right;
     display: inline-block;
     margin-left: 30px;
     color: #415094
 }
+.remove{
 
+}
 .order_box .list li:nth-child(4) a .middle {
     margin-left: 48px
 }
@@ -11455,3 +11488,6 @@ input:focus {
     }
 }
 
+.logo img{
+    height: 100px;
+}

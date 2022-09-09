@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Watch shop | eCommers</title>
+    <title>Acuzio Watches</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -61,7 +61,8 @@
                         <!-- Header Right -->
                         <div class="header-right">
                             <ul>
-                                <li><a href="/cart"><span class="flaticon-shopping-cart"></span></a> </li>
+                              <li><a href="https://www.instagram.com/acuziowatch2022/"  target="_blank"><img class="flaticon-shopping-cart"src="/assets/img/instagram.png" style="margin-bottom: 3px;"width="16px"></a></li>
+                              <li><a href="/cart"><span style="margin-left:10px;"class="flaticon-shopping-cart"></span></a> </li>
                             </ul>
                         </div>
                     </div>
@@ -110,7 +111,7 @@
                                     <p data-animation="fadeInLeft" data-delay=".7s" data-duration="2000ms">Let us handle your wrist.</p>
                                     <!-- Hero-btn -->
                                     <div class="hero__btn" data-animation="fadeInLeft" data-delay=".8s" data-duration="2000ms">
-                                        <a href="industries.html" class="btn hero-btn">Shop Now</a>
+                                        <a href="/shop" class="btn hero-btn">Shop Now</a>
                                     </div>
                                 </div>
                             </div>
@@ -158,31 +159,7 @@
             </div>
         </div>
         <!-- Gallery Area End -->
-        <!--? Popular Items Start -->
-        <div class="popular-items section-padding30 ">
-            <div class="container">
-                <!-- Section tittle -->
-                <div class="row justify-content-center">
-                    <div class="col-xl-7 col-lg-8 col-md-10">
-                        <div class="section-tittle mb-70 text-center">
-                            <h2>Popular Items</h2>
-                            <p>The most popular and loved deals of Acuzio</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    {{range $id,$el := .Products}}
-                        {{template "SingleProduct" $el}}
-                    {{end}}
-                </div>
-                <!-- Button -->
-                <div class="row justify-content-center">
-                    <div class="room-btn pt-70">
-                        <a href="/shop" class="btn view-btn1">View More Products</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <!-- Popular Items End -->
         <!--? Watch Choice  Start-->
         <div class="watch-area section-padding30">
@@ -204,21 +181,45 @@
                 <div class="row align-items-center justify-content-between">
                     <div class="col-lg-6 col-md-6 col-sm-10">
                         <div class="choice-watch-img mb-40">
-                            <img src="assets/img/gallery/choce_watch2.png" alt="">
+                            <img src="assets/img/watches/Shengke/1.webp" alt="">
                         </div>
                     </div>
                     <div class="col-lg-5 col-md-6">
                         <div class="watch-details mb-40">
                             <h2>Our Women's Watch of Choice</h2>
-                            <p>Enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse.</p>
-                            <a href="/product/5" class="btn">Show Watches</a>
+                            <p>Luxurious, elegant, and comfortable, this is how we describe this beautiful timepiece.</p>
+                            <a href="/product/8" class="btn">SEE MORE</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Watch Choice  End-->
-
+                <!--? Popular Items Start -->
+                <div class="popular-items section-padding30 ">
+                    <div class="container">
+                        <!-- Section tittle -->
+                        <div class="row justify-content-center">
+                            <div class="col-xl-7 col-lg-8 col-md-10">
+                                <div class="section-tittle mb-70 text-center">
+                                    <h2>Popular Items</h2>
+                                    <p>The most popular and loved deals of Acuzio</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            {{range $id,$el := .Products}}
+                                {{template "SingleProduct" $el}}
+                            {{end}}
+                        </div>
+                        <!-- Button -->
+                        <div class="row justify-content-center">
+                            <div class="room-btn pt-70">
+                                <a href="/shop" class="btn view-btn1">View More Products</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
     </main>
     <footer>
         <!-- Footer Start-->
@@ -230,7 +231,7 @@
                             <div class="single-footer-caption mb-30">
                                 <!-- logo -->
                                 <div class="footer-logo">
-                                    <a href="index.html"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
+                                    <a href="/"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
                                 </div>
                                 <div class="footer-tittle">
                                     <div class="footer-pera">
@@ -279,33 +280,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- Footer bottom -->
-                    <div class="col-xl-5 col-lg-4 col-md-5">
-                        <div class="footer-copy-right f-right">
-                            <!-- social -->
-                            <div class="footer-social">
-                                <a href="#"><i class="fab fa-twitter"></i></a>
-                                <a href="https://www.facebook.com/sai4ull"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#"><i class="fab fa-behance"></i></a>
-                                <a href="#"><i class="fas fa-globe"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Footer End-->
-    </footer>
-    <!--? Search model Begin -->
-    <div class="search-model-box">
-        <div class="h-100 d-flex align-items-center justify-content-center">
-            <div class="search-close-btn">+</div>
-            <form class="search-model-form">
-                <input type="text" id="search-input" placeholder="Searching key.....">
-            </form>
-        </div>
-    </div>
-    <!-- Search model end -->
 
     <!-- JS here -->
 

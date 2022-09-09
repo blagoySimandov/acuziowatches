@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Watch shop | eCommers</title>
+    <title>Acuzio Watches</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -44,7 +44,7 @@
                     <div class="menu-wrapper">
                         <!-- Logo -->
                         <div class="logo">
-                            <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+                            <a href="/"><img src="assets/img/logo/logo.png" alt=""></a>
                         </div>
                         <!-- Main-menu -->
                         <div class="main-menu d-none d-lg-block">
@@ -60,7 +60,9 @@
                         <!-- Header Right -->
                         <div class="header-right">
                             <ul>
-                                <li><a href="cart.html"><span class="flaticon-shopping-cart"></span></a> </li>
+                              <li><a href="https://www.instagram.com/acuziowatch2022/"  target="_blank"><img class="flaticon-shopping-cart"src="/assets/img/instagram.png" style="margin-bottom: 3px;"width="16px"></a></li>
+  
+                              <li><a href="/cart"><span style="margin-left:10px;"class="flaticon-shopping-cart"></span></a> </li>
                             </ul>
                         </div>
                     </div>
@@ -81,7 +83,7 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="hero-cap text-center">
-                                <h2>Contacts</h2>
+                                <h2>Contact Us</h2>
                             </div>
                         </div>
                     </div>
@@ -90,16 +92,15 @@
         </div>
         <!--? Hero Area End-->
         <!-- ================ contact section start ================= -->
- 
-
-
-                <div class="row">
-                    <div class="col-12">
-                        <h2 class="contact-title">Get in Touch</h2>
-                    </div>
+                <div class="row d-flex justify-content-center" style="padding-top: 30px;">
                     <div class="col-lg-8">
-                        <form class="form-contact contact_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
+                        <form class="form-contact contact_form" action="/sendMessage" method="post" id="contactForm">
                             <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <input class="form-control" name="subject" id="subject" type="text" onfocus="this.placeholder = ''" onblur=" this.placeholder = 'Enter Subject'" placeholder="Enter Subject">
+                                    </div>
+                                </div>  
                                 <div class="col-12">
                                     <div class="form-group">
                                         <textarea class="form-control w-100" name="message" id="message" cols="30" rows="9" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Message'" placeholder=" Enter Message"></textarea>
@@ -115,11 +116,6 @@
                                         <input class="form-control valid" name="email" id="email" type="email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'" placeholder="Email">
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <input class="form-control" name="subject" id="subject" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Subject'" placeholder="Enter Subject">
-                                    </div>
-                                </div>
                             </div>
                             <div class="form-group mt-3">
                                 <button type="submit" class="button button-contactForm boxed-btn">Send</button>
@@ -127,8 +123,6 @@
                         </form>
                     </div>
                 </div>
-            </div>
-        </section>
         <!-- ================ contact section end ================= -->
     </main>
     <footer>
@@ -141,7 +135,7 @@
                             <div class="single-footer-caption mb-30">
                                 <!-- logo -->
                                 <div class="footer-logo">
-                                    <a href="index.html"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
+                                    <a href="/"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
                                 </div>
                                 <div class="footer-tittle">
                                     <div class="footer-pera">
@@ -190,34 +184,10 @@
                         </div>
                     </div>
                 </div>
-                <!-- Footer bottom -->
-                    <div class="col-xl-5 col-lg-4 col-md-5">
-                        <div class="footer-copy-right f-right">
-                            <!-- social -->
-                            <div class="footer-social">
-                                <a href="#"><i class="fab fa-twitter"></i></a>
-                                <a href="https://www.facebook.com/sai4ull"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#"><i class="fab fa-behance"></i></a>
-                                <a href="#"><i class="fas fa-globe"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
-        <!-- Footer End-->
     </footer>
-    <!--? Search model Begin -->
-    <div class="search-model-box">
-        <div class="h-100 d-flex align-items-center justify-content-center">
-            <div class="search-close-btn">+</div>
-            <form class="search-model-form">
-                <input type="text" id="search-input" placeholder="Searching key.....">
-            </form>
-        </div>
-    </div>
-    <!-- Search model end -->
-
+            
     <!-- JS here -->
 	
     <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>

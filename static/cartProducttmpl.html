@@ -17,5 +17,6 @@
     <h5>{{.Count}}</h5>
   </td> 
   <td><h5>{{.Pr.Currency}} {{.Subtotal}}</h5></td>
+  <td><form action="/remove" method="post"><button type="submit" name="id" value="{{.Pr.Id}}" class="genric-btn danger circle">X</button></form></td>
 </tr>
 {{end}}

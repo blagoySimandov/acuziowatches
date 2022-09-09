@@ -4,6 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="{{.Meta}}">
     <!-- displays site properly based on user's device -->
 <!--CSS-->
     <link rel="stylesheet" href="/assets/css/product_details.css" />
@@ -76,10 +77,12 @@
                     </div>
                     <!-- Header Right -->
                     <div class="header-right">
-                        <ul>
-                            <li><a href="/cart"><span class="flaticon-shopping-cart"></span></a> </li>
-                        </ul>
-                    </div>
+                      <ul>
+                        <li><a href="https://www.instagram.com/acuziowatch2022/"  target="_blank"><img class="flaticon-shopping-cart"src="/assets/img/instagram.png" style="margin-bottom: 3px;"width="16px"></a></li>
+
+                        <li><a href="/cart"><span style="margin-left:10px;"class="flaticon-shopping-cart"></span></a> </li>
+                      </ul>
+                  </div>
                 </div>
                 <!-- Mobile Menu -->
                 <div class="col-12">
@@ -161,14 +164,14 @@
 
       <section class="price">
         <h2 class="price-sub__heading">ACUZIO WATCHES</h2>
-        <h1 class="price-main__heading">Stylish Men's Watch by Lige</h1>
+        <h1 class="price-main__heading">{{.Title}}</h1>
         <p class="price-txt">
-            A favourite among many, Lige's watches have shown the world that they are stylish, modern and sharp.
+            {{.Description}}
         </p>
         <div class="price-box">
           <div class="price-box__main">
             <span class="price-box__main-new">{{.Currency}} {{.Price}}</span>
-            <span class="price-box__main-discount"> 33%</span>
+            <span class="price-box__main-discount"> {{.PercentOfOldPrice}}%</span>
           </div>
           <span class="price-box__old">{{.OldPrice}}</span>
         </div>
@@ -204,7 +207,68 @@
       </section>
     </main>
     
-    <!-- Attribution -->
+    <footer>
+      <!-- Footer Start-->
+      <div class="footer-area footer-padding">
+          <div class="container">
+              <div class="row d-flex justify-content-between">
+                  <div class="col-xl-3 col-lg-3 col-md-5 col-sm-6">
+                      <div class="single-footer-caption mb-50">
+                          <div class="single-footer-caption mb-30">
+                              <!-- logo -->
+                              <div class="footer-logo">
+                                  <a href="/"><img src="/assets/img/logo/logo2_footer.png" alt=""></a>
+                              </div>
+                              <div class="footer-tittle">
+                                  <div class="footer-pera">
+                                      <p>We at Acuzio bring you quality watches for affordable prices. We believe that everyone has the right to dress sharp.</p>
+                              </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-xl-2 col-lg-3 col-md-3 col-sm-5">
+                      <div class="single-footer-caption mb-50">
+                          <div class="footer-tittle">
+                              <h4>Quick Links</h4>
+                              <ul>
+                                  <li><a href="/about">About</a></li>
+                                  <li><a href="/shop"> Shop</a></li>
+                                  <li><a href="/contact"> Contact</a></li>
+                                  <li><a href="/cart">Your Cart</a></li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-xl-3 col-lg-3 col-md-4 col-sm-7">
+                      <div class="single-footer-caption mb-50">
+                          <div class="footer-tittle">
+                              <h4>Our favourite products</h4>
+                              <ul>
+                                  <li><a href="/product/0">Men's Watch of Choice</a></li>
+                                  <li><a href="/product/1">Women's Watch of Choice</a></li>
+                                  <li><a href="/product/2">Most popular</a></li>
+                                  <li><a href="/product/3">Newest Arrival</a></li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-xl-3 col-lg-3 col-md-5 col-sm-7">
+                      <div class="single-footer-caption mb-50">
+                          <div class="footer-tittle">
+                              <h4>Support</h4>
+                              <ul>
+                                  <li><a href="mailto: acuzio@acuzio.store">Email: acuzio@acuzio.store</a></li>
+                                  <li><a href="/contact">Contact us Directly</a></li>
+                                  <li><a href="/contact">Report a Payment Issue</a></li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </footer>
   </body>
 </html>
 {{end}}

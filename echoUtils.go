@@ -1,28 +1,33 @@
 package main
 
 import (
-	"encoding/json"
+	"context"
 	"io"
 	"log"
-	"os"
 	"text/template"
+	"time"
 
 	"github.com/labstack/echo/v4"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func loadData(path string) (*ProductData, error) {
-	f, err := os.Open(path)
-	if err != nil {
-		log.Println("Cannot open file")
-		log.Println(err)
-		return nil, err
-	}
-	defer f.Close()
-	enc := json.NewDecoder(f)
 	var p ProductData
-	if err := enc.Decode(&p); err != nil {
-		log.Println(err)
-		return nil, err
+	serverAPIOptions := options.ServerAPI(options.ServerAPIVersion1)
+	clientOptions := options.Client().
+		ApplyURI(uri).
+		SetServerAPIOptions(serverAPIOptions)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	client, err := mongo.Connect(ctx, clientOptions)
+	if err != nil {
+		log.Fatal(err)
+	}
+	coll := client.Database("Products").Collection(path)
+	if err = coll.FindOne(context.TODO(), bson.D{}).Decode(&p); err != nil {
+		panic(err)
 	}
 	return &p, nil
 }
@@ -30,6 +35,20 @@ func loadData(path string) (*ProductData, error) {
 type Template struct {
 	templates *template.Template
 }
+
+// func PercentFiller(arr []*Product) {
+// 	for _, e := range arr {
+// 		price, err := strconv.ParseFloat(e.Price, 64)
+// 		if err != nil {
+// 			fmt.Printf("errorparsing: %v", err)
+// 		}
+// 		oldPrice, err := strconv.ParseFloat(e.OldPrice, 64)
+// 		if err != nil {
+// 			fmt.Printf("parse error: %v", err)
+// 		}
+// 		e.PercentOfOldPrice = math.Round(((price / oldPrice) * 100))
+// 	}
+// }
 
 func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
 	return t.templates.ExecuteTemplate(w, name, data)

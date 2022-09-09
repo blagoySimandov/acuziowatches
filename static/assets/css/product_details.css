@@ -617,7 +617,14 @@ input:focus {
 /*/////////////
   Media Queries
    //////////////*/
+   @media (min-width: 1370px) {
+    .item{
+        position: relative;
+        top: -100px;
+    }
+   }
 @media only screen and (max-width: 1600px) {
+
     .head {
         max-width: 100%;
         margin-left: 3rem;
