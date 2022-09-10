@@ -309,13 +309,14 @@ func main() {
 	e.POST("/api/orders", PayPalOrder)
 	e.POST("/api/orders/capture/:id", PayPalCaptureOrder)
 	//e.POST("/confirm", conf)
-
-	e.Logger.Fatal(e.Start(":" + getDefEnv("PORT", "8080")))
+	e.Logger.Fatal(e.Start("127.0.0.1:" + getDefEnv("PORT", "8080")))
 
 }
 
 func getDefEnv(env string, def string) (res string) {
+
 	res = os.Getenv(env)
+
 	if res == "" {
 		res = def
 	}
