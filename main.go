@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"os"
 	"text/template"
 	"time"
 
@@ -309,6 +310,14 @@ func main() {
 	e.POST("/api/orders/capture/:id", PayPalCaptureOrder)
 	//e.POST("/confirm", conf)
 
-	e.Logger.Fatal(e.Start("0.0.0.0:8080"))
+	e.Logger.Fatal(e.Start(":" + getDefEnv("PORT", "8080")))
 
+}
+
+func getDefEnv(env string, def string) (res string) {
+	res = os.Getenv(env)
+	if res == "" {
+		res = def
+	}
+	return
 }
