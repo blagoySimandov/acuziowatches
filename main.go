@@ -57,11 +57,13 @@ type (
 //create a Cookie
 
 func Index(c echo.Context) error {
+	fmt.Println("Trying to load all products!")
 	bestProducts, err := loadData(bestProducts, "")
 	if err != nil {
 		c.Logger().Error("error loading data: %v", err)
 		return err
 	}
+	fmt.Println("Loaded roducts", bestProducts)
 	return c.Render(http.StatusOK, "indexTmpl", bestProducts)
 }
 
@@ -264,10 +266,11 @@ var (
 func connectMongo(ctx context.Context) (*mongo.Client, error) {
 	ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
 	defer cancel()
-	// serverAPIOptions := options.ServerAPI(options.ServerAPIVersion1)
-	// clientOptions :=
-	// 	SetServerAPIOptions(serverAPIOptions)
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI(uri))
+	serverAPIOptions := options.ServerAPI(options.ServerAPIVersion1)
+	clientOptions := options.Client().
+		ApplyURI(uri).
+		SetServerAPIOptions(serverAPIOptions)
+	client, err := mongo.Connect(ctx, clientOptions)
 	if err != nil {
 		return nil, err
 	}
@@ -281,6 +284,12 @@ func main() {
 	if mongoClient, err = connectMongo(globalCtx); err != nil {
 		panic(err)
 	}
+	// p, err := loadData(products, "")
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// fmt.Println(p)
+	// return
 
 	e := echo.New()
 	e.Renderer = &Template{
@@ -309,7 +318,7 @@ func main() {
 	e.POST("/api/orders", PayPalOrder)
 	e.POST("/api/orders/capture/:id", PayPalCaptureOrder)
 	//e.POST("/confirm", conf)
-	e.Logger.Fatal(e.Start("127.0.0.1:" + getDefEnv("PORT", "8080")))
+	e.Logger.Fatal(e.Start(":" + getDefEnv("PORT", "8080")))
 
 }
 

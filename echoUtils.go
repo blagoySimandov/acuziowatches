@@ -6,9 +6,11 @@ import (
 	"strconv"
 	"strings"
 	"text/template"
+	"time"
 
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/gommon/log"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -31,11 +33,15 @@ func loadData(collection string, order string) (*ProductData, error) {
 
 func findFiles(coll *mongo.Collection) (*ProductData, error) {
 	var p ProductData
-	docs, err := coll.Find(context.Background(), bson.D{})
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	docs, err := coll.Find(ctx, bson.D{})
 	if err != nil {
+		log.Error("error finding the docs:", err)
 		return nil, err
 	}
-	if err := docs.All(context.Background(), &p.Products); err != nil {
+	if err := docs.All(ctx, &p.Products); err != nil {
+		log.Error("error converting the cursor ro array:", err)
 		return nil, err
 	}
 	return &p, nil
