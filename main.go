@@ -4,8 +4,6 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	"sort"
-	"strconv"
 	"text/template"
 	"time"
 
@@ -20,8 +18,8 @@ import (
 )
 
 const (
-	productsJSON       = "products"
-	bestProductsJSON   = "bestProducts"
+	products           = "products"
+	bestProducts       = "bestProducts"
 	defaultSessionName = "session"
 	clientID           = "AcQJf_BZi9tLGfptFCXm0hv_TkItaYow6I0VR2UthIppfaWDWKjAm2kmSJhOIEIQsklEEuEjUXJgCs0q"
 	secretID           = "EFw4g1cEJIPzUYIxXWhvURDBBKPcqnIpqwSAyW-h4NWe3NBg28SYWgBfCi7UH-yh03SCgaK_mb2l9n7S"
@@ -31,7 +29,7 @@ type (
 	CartProduct struct {
 		Pr       Product
 		Count    string
-		Subtotal float64
+		Subtotal string
 	}
 
 	CartProducts struct {
@@ -58,6 +56,11 @@ type (
 //create a Cookie
 
 func Index(c echo.Context) error {
+	bestProducts, err := loadData(bestProducts, "")
+	if err != nil {
+		c.Logger().Error("error loading data: %v", err)
+		return err
+	}
 	return c.Render(http.StatusOK, "indexTmpl", bestProducts)
 }
 
@@ -69,42 +72,43 @@ func (p *ProductData) CalculateDiscount() {
 
 func Shop(c echo.Context) error {
 	order := c.QueryParam("order")
-	var orderedData ProductData
 
-	orderedData.Products = append([]Product{}, productData.Products...)
+	var (
+		orderedData *ProductData
+		err         error
+	)
 	if order == "HtoL" {
-		sort.Slice(orderedData.Products, func(i, j int) bool {
-			iPrice, err := strconv.ParseFloat(orderedData.Products[i].Price, 32)
-			if err != nil {
-				log.Error(err)
-			}
-			jPrice, err := strconv.ParseFloat(orderedData.Products[j].Price, 32)
-			if err != nil {
-				log.Error(err)
-			}
-			return iPrice > jPrice
-		})
+		orderedData, err = loadData(products, "HtoL")
+		if err != nil {
+			c.Logger().Error(err)
+			return err
+		}
+
 	} else if order == "LtoH" {
-		sort.Slice(orderedData.Products, func(i, j int) bool {
-			iPrice, err := strconv.ParseFloat(orderedData.Products[i].Price, 32)
-			if err != nil {
-				log.Error(err)
-			}
-			jPrice, err := strconv.ParseFloat(orderedData.Products[j].Price, 32)
-			if err != nil {
-				log.Error(err)
-			}
-			return iPrice < jPrice
-		})
+		orderedData, err = loadData(products, "LtoH")
+		if err != nil {
+			c.Logger().Error(err)
+			return err
+		}
 	} else {
-		orderedData.Products = append([]Product{}, productData.Products...)
+		orderedData, err = loadData(products, "")
+		if err != nil {
+			c.Logger().Error(err)
+			return err
+		}
 	}
 	return c.Render(http.StatusOK, "shopTmpl", orderedData)
 }
 func ProductDetails(c echo.Context) error {
 	id := c.Param("id")
-	for _, e := range productData.Products {
+	products, err := loadData(products, "")
+	if err != nil {
+		c.Logger().Error("error Loading products: %v", err)
+		return err
+	}
+	for _, e := range products.Products {
 		if e.Id == id {
+			fmt.Println("found")
 			return c.Render(http.StatusOK, "productTmpl", e)
 		}
 	}
@@ -157,27 +161,9 @@ func Checkout(c echo.Context) error {
 		log.Error("error in creating a session")
 	}
 
-	var cart CartProducts
-	for key, count := range sess.Values {
-		for _, p := range productData.Products {
-			if key == p.Id {
-				priceFloat, err := strconv.ParseFloat(p.Price, 64)
-				if err != nil {
-					log.Error(err)
-				}
-				countFloat, err := strconv.ParseFloat(count.(string), 64)
-				if err != nil {
-					log.Error(err)
-				}
-				x := CartProduct{
-					Pr:       p,
-					Count:    count.(string),
-					Subtotal: countFloat * priceFloat,
-				}
-				cart.Products = append(cart.Products, x)
-				cart.Total = cart.Total + x.Subtotal
-			}
-		}
+	cart, err := loadCart(sess)
+	if err != nil {
+		c.Logger().Error("error loading cart: %v", err)
 	}
 	return c.Render(http.StatusOK, "checkoutTmpl", cart)
 }
@@ -187,29 +173,13 @@ func Cart(c echo.Context) error {
 	sess, err := session.Get(defaultSessionName, c)
 	if err != nil {
 		log.Error("error in creating a session")
+		return err
 	}
 
-	var cart CartProducts
-	for key, count := range sess.Values {
-		for _, p := range productData.Products {
-			if key == p.Id {
-				priceFloat, err := strconv.ParseFloat(p.Price, 64)
-				if err != nil {
-					log.Error(err)
-					return err
-				}
-				countFloat, err := strconv.ParseFloat(count.(string), 64)
-				if err != nil {
-					log.Error(err)
-				}
-				x := CartProduct{
-					Pr:       p,
-					Count:    count.(string),
-					Subtotal: countFloat * priceFloat,
-				}
-				cart.Products = append(cart.Products, x)
-			}
-		}
+	cart, err := loadCart(sess)
+	if err != nil {
+		c.Logger().Error("error loading cart: %v", err)
+		return err
 	}
 
 	return c.Render(http.StatusOK, "cartTmpl", cart)
@@ -244,30 +214,9 @@ func PayPalOrder(c echo.Context) error {
 		log.Error("error in creating a session")
 	}
 
-	var cart CartProducts
-
-	for key, count := range sess.Values {
-		for _, p := range productData.Products {
-			if key == p.Id {
-				priceFloat, err := strconv.ParseFloat(p.Price, 64)
-				if err != nil {
-					log.Error("parsing error:", err)
-					return err
-				}
-				countFloat, err := strconv.ParseFloat(count.(string), 64)
-				if err != nil {
-					log.Error("parsing error:", err)
-					return err
-				}
-				x := CartProduct{
-					Pr:       p,
-					Count:    count.(string),
-					Subtotal: countFloat * priceFloat,
-				}
-				cart.Products = append(cart.Products, x)
-				cart.Total = cart.Total + x.Subtotal
-			}
-		}
+	cart, err := loadCart(sess)
+	if err != nil {
+		c.Logger().Error("error loading cart: %v", err)
 	}
 	totalString := fmt.Sprintf("%.3f", cart.Total)
 	_ = totalString
@@ -306,9 +255,7 @@ func PayPalCaptureOrder(c echo.Context) error {
 }
 
 var (
-	productData  *ProductData
-	bestProducts *ProductData
-	uri          string = "mongodb+srv://acuzio:uOBzJFvD4voHaWdb@cluster0.ynz5x4i.mongodb.net/?retryWrites=true&w=majority"
+	uri string = "mongodb+srv://acuzio:uOBzJFvD4voHaWdb@cluster0.ynz5x4i.mongodb.net/?retryWrites=true&w=majority"
 
 	mongoClient *mongo.Client
 )
@@ -333,18 +280,6 @@ func main() {
 	if mongoClient, err = connectMongo(globalCtx); err != nil {
 		panic(err)
 	}
-
-	localBpd, err := loadData(bestProductsJSON)
-	if err != nil {
-		panic(err)
-	}
-	bestProducts = localBpd
-
-	localPd, err := loadData(productsJSON)
-	if err != nil {
-		panic(err)
-	}
-	productData = localPd
 
 	e := echo.New()
 	e.Renderer = &Template{
