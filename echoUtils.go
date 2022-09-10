@@ -3,31 +3,22 @@ package main
 import (
 	"context"
 	"io"
-	"log"
 	"text/template"
-	"time"
 
 	"github.com/labstack/echo/v4"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func loadData(path string) (*ProductData, error) {
+func loadData(collection string) (*ProductData, error) {
 	var p ProductData
-	serverAPIOptions := options.ServerAPI(options.ServerAPIVersion1)
-	clientOptions := options.Client().
-		ApplyURI(uri).
-		SetServerAPIOptions(serverAPIOptions)
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-	client, err := mongo.Connect(ctx, clientOptions)
+
+	coll := mongoClient.Database("Products").Collection(collection)
+	docs, err := coll.Find(context.TODO(), bson.D{})
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
-	coll := client.Database("Products").Collection(path)
-	if err = coll.FindOne(context.TODO(), bson.D{}).Decode(&p); err != nil {
-		panic(err)
+	if err := docs.All(context.Background(), &p.Products); err != nil {
+		return nil, err
 	}
 	return &p, nil
 }

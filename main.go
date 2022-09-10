@@ -36,19 +36,18 @@ type (
 
 	CartProducts struct {
 		Products []CartProduct
-		Total    float64 `default:0`
+		Total    float64 //`default:0`
 	}
 
 	Product struct {
-		Name              string  `json:"name"`
-		Price             string  `json:"price"`
-		Currency          string  `json:"currency"`
-		Id                string  `json:"id"`
-		OldPrice          string  `json:"oldPrice"`
-		Title             string  `json:"title"`
-		Description       string  `json:"description"`
-		Meta              string  `json:"meta"`
-		PercentOfOldPrice float64 `json:"percent"`
+		Id          string `bson:"_id" json:"id"`
+		Name        string `json:"name"`
+		Currency    string `json:"currency"`
+		Price       string `json:"price"`
+		OldPrice    string `json:"oldPrice"`
+		Title       string `json:"title"`
+		Description string `json:"description"`
+		Meta        string `json:"meta"`
 	}
 
 	ProductData struct {
@@ -59,13 +58,19 @@ type (
 //create a Cookie
 
 func Index(c echo.Context) error {
-
 	return c.Render(http.StatusOK, "indexTmpl", bestProducts)
+}
+
+func (p *ProductData) CalculateDiscount() {
+	// for _, e := range p.Products {
+	// 	e.Title = "f2osd"
+	// }
 }
 
 func Shop(c echo.Context) error {
 	order := c.QueryParam("order")
 	var orderedData ProductData
+
 	orderedData.Products = append([]Product{}, productData.Products...)
 	if order == "HtoL" {
 		sort.Slice(orderedData.Products, func(i, j int) bool {
@@ -97,12 +102,13 @@ func Shop(c echo.Context) error {
 	return c.Render(http.StatusOK, "shopTmpl", orderedData)
 }
 func ProductDetails(c echo.Context) error {
-	id, err := strconv.Atoi(c.Param("id"))
-	if err != nil {
-		log.Error(err)
+	id := c.Param("id")
+	for _, e := range productData.Products {
+		if e.Id == id {
+			return c.Render(http.StatusOK, "productTmpl", e)
+		}
 	}
-
-	return c.Render(http.StatusOK, "productTmpl", productData.Products[id])
+	return c.Render(http.StatusNotFound, "404", "")
 }
 
 func AddToCart(c echo.Context) error {
@@ -120,29 +126,28 @@ func AddToCart(c echo.Context) error {
 	}
 	sess.Values[id] = count
 	sess.Save(c.Request(), c.Response())
-	return c.Redirect(http.StatusMovedPermanently, "/cart")
+	http.Redirect(c.Response(), c.Request(), "/cart", 301)
+	return nil
 
 }
 func SendMessage(c echo.Context) error {
-	email := c.FormValue("email")
-	name := c.FormValue("name")
-	message := c.FormValue("message")
-	subject := c.FormValue("subject") + "    by: " + name + " email: " + email + "\n"
+	email, name := c.FormValue("email"), c.FormValue("name")
+	message, subject := c.FormValue("message"), c.FormValue("subject")
 
-	serverAPIOptions := options.ServerAPI(options.ServerAPIVersion1)
-	clientOptions := options.Client().
-		ApplyURI(uri).
-		SetServerAPIOptions(serverAPIOptions)
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	title := subject + "    by: " + name + " email: " + email + "\n"
+
+	coll := mongoClient.Database("Contacts").Collection("Contacts")
+	doc := bson.D{{Key: "title", Value: title}, {Key: "body", Value: message}, {Key: "name", Value: name}, {Key: "email", Value: email}}
+
+	ctx, cancel := context.WithTimeout(c.Request().Context(), 10*time.Second)
 	defer cancel()
-	client, err := mongo.Connect(ctx, clientOptions)
+	result, err := coll.InsertOne(ctx, doc)
 	if err != nil {
-		log.Fatal(err)
+		c.Logger().Error("Cannot insert data in DB. Error: %v", err)
+		return err
 	}
-	coll := client.Database("Contacts").Collection("Contacts")
-	doc := bson.D{{"subject", subject}, {"body", message}, {"name", name}, {"email", email}}
-	result, _ := coll.InsertOne(context.TODO(), doc)
-	fmt.Printf("Inserted document with _id: %v\n", result.InsertedID)
+	_ = result
+	// c.Logger().Printf(("Inserted document with _id: %v\n", result.InsertedID)
 	return c.Redirect(http.StatusMovedPermanently, "/submit-success")
 }
 
@@ -191,6 +196,7 @@ func Cart(c echo.Context) error {
 				priceFloat, err := strconv.ParseFloat(p.Price, 64)
 				if err != nil {
 					log.Error(err)
+					return err
 				}
 				countFloat, err := strconv.ParseFloat(count.(string), 64)
 				if err != nil {
@@ -228,7 +234,7 @@ func PayPalOrder(c echo.Context) error {
 	}
 
 	// Retrieve access token
-	_, err = p.GetAccessToken(context.Background())
+	_, err = p.GetAccessToken(c.Request().Context())
 	if err != nil {
 		panic(err)
 	}
@@ -245,11 +251,13 @@ func PayPalOrder(c echo.Context) error {
 			if key == p.Id {
 				priceFloat, err := strconv.ParseFloat(p.Price, 64)
 				if err != nil {
-					log.Error(err)
+					log.Error("parsing error:", err)
+					return err
 				}
 				countFloat, err := strconv.ParseFloat(count.(string), 64)
 				if err != nil {
-					log.Error(err)
+					log.Error("parsing error:", err)
+					return err
 				}
 				x := CartProduct{
 					Pr:       p,
@@ -262,17 +270,23 @@ func PayPalOrder(c echo.Context) error {
 		}
 	}
 	totalString := fmt.Sprintf("%.3f", cart.Total)
+	_ = totalString
 	paypalAmount := paypal.PurchaseUnitAmount{}
 	paypalAmount.Currency = "USD"
 	paypalAmount.Value = totalString
-	var orderPayer *paypal.CreateOrderPayer
-	var application *paypal.ApplicationContext
-	order, err := p.CreateOrder(context.Background(), paypal.OrderIntentCapture, []paypal.PurchaseUnitRequest{paypal.PurchaseUnitRequest{ReferenceID: "ref-id", Amount: &paypalAmount}}, orderPayer, application)
+	var orderPayer paypal.CreateOrderPayer
+	var application paypal.ApplicationContext
+	order, err := p.CreateOrder(context.Background(), paypal.OrderIntentCapture,
+		[]paypal.PurchaseUnitRequest{
+			{ReferenceID: "ref-id", Amount: &paypalAmount},
+		},
+		&orderPayer, &application)
+
 	fmt.Println(order)
 	// if err != nil {
 	// 	log.Error(err)
 	// }
-	return nil
+	return Cart(c)
 }
 func PayPalCaptureOrder(c echo.Context) error {
 	//orderID := c.Param("id")
@@ -291,12 +305,34 @@ func PayPalCaptureOrder(c echo.Context) error {
 	return nil
 }
 
-var productData *ProductData
-var bestProducts *ProductData
+var (
+	productData  *ProductData
+	bestProducts *ProductData
+	uri          string = "mongodb+srv://acuzio:uOBzJFvD4voHaWdb@cluster0.ynz5x4i.mongodb.net/?retryWrites=true&w=majority"
 
-var uri string = "mongodb+srv://acuzio:uOBzJFvD4voHaWdb@cluster0.ynz5x4i.mongodb.net/?retryWrites=true&w=majority"
+	mongoClient *mongo.Client
+)
+
+func connectMongo(ctx context.Context) (*mongo.Client, error) {
+	ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
+	defer cancel()
+	// serverAPIOptions := options.ServerAPI(options.ServerAPIVersion1)
+	// clientOptions :=
+	// 	SetServerAPIOptions(serverAPIOptions)
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI(uri))
+	if err != nil {
+		return nil, err
+	}
+	return client, nil
+}
 
 func main() {
+	globalCtx := context.Background()
+	var err error
+
+	if mongoClient, err = connectMongo(globalCtx); err != nil {
+		panic(err)
+	}
 
 	localBpd, err := loadData(bestProductsJSON)
 	if err != nil {
@@ -321,13 +357,17 @@ func main() {
 	e.GET("/", Index)
 	e.GET("/product/:id", ProductDetails)
 	e.POST("/addToCart/:id", AddToCart)
-	e.GET("/cart", Cart)
+
 	e.POST("/sendMessage", SendMessage)
-	e.POST("/remove", Remove)
+
 	e.File("/about", "static/about.html")
 	e.File("/contact", "static/contact.html")
 	e.File("/submit-success", "static/submit-success.html")
 	e.GET("/checkout", Checkout)
+
+	//Cart Requests
+	e.POST("/remove", Remove)
+	e.GET("/cart", Cart)
 
 	//Paypal POST
 	e.POST("/api/orders", PayPalOrder)

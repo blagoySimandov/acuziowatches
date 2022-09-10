@@ -78,8 +78,7 @@
                     <!-- Header Right -->
                     <div class="header-right">
                       <ul>
-                        <li><a href="https://www.instagram.com/acuziowatch2022/"  target="_blank"><img class="flaticon-shopping-cart"src="/assets/img/instagram.png" style="margin-bottom: 3px;"width="16px"></a></li>
-
+                        <li><a href="https://www.instagram.com/acuziowatches2022/"  target="_blank"><img class="flaticon-shopping-cart"src="/assets/img/instagram.png" style="margin-bottom: 3px;"width="16px"></a></li>
                         <li><a href="/cart"><span style="margin-left:10px;"class="flaticon-shopping-cart"></span></a> </li>
                       </ul>
                   </div>
@@ -175,7 +174,7 @@
           </div>
           <span class="price-box__old">{{.OldPrice}}</span>
         </div>
-        <form action="/addToCart/{{.Id}}" method="POST" target="hiddenFrame"enctype="application/x-www-form-urlencoded">
+        <form action="/addToCart/{{.Id}}" method="POST" enctype="application/x-www-form-urlencoded">
         <div class="price-btnbox">
           <div class="price-btns">
             <button id="add" type="button" class="price-btn__add price-btn">
@@ -194,7 +193,7 @@
               />
             </button>
           </div>
-          <button type="submit" class="price-cart__btn" >
+          <button type="submit"  class="price-cart__btn" >
             <img
               src="/assets/img/icon-cart.svg"
               alt="cart image"

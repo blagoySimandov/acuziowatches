@@ -585,7 +585,10 @@ input:focus {
     -moz-appearance: textfield;
   }
 
-
+.price-cart__btn-img{
+    margin: 0 0 5px 0;
+    filter: brightness(0) invert(1);
+}
 .price-cart__btn {
     width: 50%;
     box-shadow: 0px 10px 25px 3px;
@@ -597,7 +600,7 @@ input:focus {
     font-size: large;
     font-weight: bolder;
     color: white;
-    background-color: #ddd;
+    background-color: navy;
 }
 .price-cart__btn:hover {
     cursor: pointer;
