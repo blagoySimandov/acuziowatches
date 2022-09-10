@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"text/template"
 	"time"
 
 	"github.com/gorilla/sessions"
@@ -292,32 +291,32 @@ func main() {
 	// return
 
 	e := echo.New()
-	e.Renderer = &Template{
-		templates: template.Must(template.ParseGlob("./static/*.html")),
-	}
-	e.Use(session.Middleware(sessions.NewCookieStore([]byte("secret"))))
+	// e.Renderer = &Template{
+	// 	templates: template.Must(template.ParseGlob("./static/*.html")),
+	// }
+	// e.Use(session.Middleware(sessions.NewCookieStore([]byte("secret"))))
 
 	e.Static("/", "./static")
-	e.GET("/shop", Shop)
-	e.GET("/", Index)
-	e.GET("/product/:id", ProductDetails)
-	e.POST("/addToCart/:id", AddToCart)
+	// e.GET("/shop", Shop)
+	// e.GET("/", Index)
+	// e.GET("/product/:id", ProductDetails)
+	// e.POST("/addToCart/:id", AddToCart)
 
-	e.POST("/sendMessage", SendMessage)
+	// e.POST("/sendMessage", SendMessage)
 
-	e.File("/about", "static/about.html")
-	e.File("/contact", "static/contact.html")
-	e.File("/submit-success", "static/submit-success.html")
-	e.GET("/checkout", Checkout)
+	// e.File("/about", "static/about.html")
+	// e.File("/contact", "static/contact.html")
+	// e.File("/submit-success", "static/submit-success.html")
+	// e.GET("/checkout", Checkout)
 
-	//Cart Requests
-	e.POST("/remove", Remove)
-	e.GET("/cart", Cart)
+	// //Cart Requests
+	// e.POST("/remove", Remove)
+	// e.GET("/cart", Cart)
 
-	//Paypal POST
-	e.POST("/api/orders", PayPalOrder)
-	e.POST("/api/orders/capture/:id", PayPalCaptureOrder)
-	//e.POST("/confirm", conf)
+	// //Paypal POST
+	// e.POST("/api/orders", PayPalOrder)
+	// e.POST("/api/orders/capture/:id", PayPalCaptureOrder)
+	// //e.POST("/confirm", conf)
 	e.Logger.Fatal(e.Start(":" + getDefEnv("PORT", "8080")))
 
 }
