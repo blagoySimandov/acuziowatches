@@ -35,7 +35,7 @@ type (
 
 	CartProducts struct {
 		Products []CartProduct
-		Total    float64 //`default:0`
+		Total    string //`default:0`
 	}
 
 	Product struct {
@@ -57,13 +57,11 @@ type (
 //create a Cookie
 
 func Index(c echo.Context) error {
-	fmt.Println("Trying to load all products!")
 	bestProducts, err := loadData(bestProducts, "")
 	if err != nil {
 		c.Logger().Error("error loading data: %v", err)
 		return err
 	}
-	fmt.Println("Loaded roducts", bestProducts)
 	return c.Render(http.StatusOK, "indexTmpl", bestProducts)
 }
 
@@ -104,12 +102,12 @@ func Shop(c echo.Context) error {
 }
 func ProductDetails(c echo.Context) error {
 	id := c.Param("id")
-	products, err := loadData(products, "")
+	shopProducts, err := loadData(products, "")
 	if err != nil {
 		c.Logger().Error("error Loading products: %v", err)
 		return err
 	}
-	for _, e := range products.Products {
+	for _, e := range shopProducts.Products {
 		if e.Id == id {
 			fmt.Println("found")
 			return c.Render(http.StatusOK, "productTmpl", e)
@@ -168,6 +166,7 @@ func Checkout(c echo.Context) error {
 	if err != nil {
 		c.Logger().Error("error loading cart: %v", err)
 	}
+	fmt.Println(cart)
 	return c.Render(http.StatusOK, "checkoutTmpl", cart)
 }
 
@@ -178,7 +177,7 @@ func Cart(c echo.Context) error {
 		log.Error("error in creating a session")
 		return err
 	}
-
+	fmt.Println("hey")
 	cart, err := loadCart(sess)
 	if err != nil {
 		c.Logger().Error("error loading cart: %v", err)
@@ -303,20 +302,22 @@ func main() {
 	e.GET("/product/:id", ProductDetails)
 	e.POST("/addToCart/:id", AddToCart)
 
-	// e.POST("/sendMessage", SendMessage)
+	e.POST("/sendMessage", SendMessage)
 
-	// e.File("/about", "static/about.html")
-	// e.File("/contact", "static/contact.html")
-	// e.File("/submit-success", "static/submit-success.html")
-	// e.GET("/checkout", Checkout)
+	e.File("/about", "static/about.html")
+	e.File("/contact", "static/contact.html")
+	e.File("/submit-success", "static/submit-success.html")
 
-	// //Cart Requests
-	// e.POST("/remove", Remove)
-	// e.GET("/cart", Cart)
-
+	//Chekout and payment
+	e.GET("/checkout", Checkout)
 	// //Paypal POST
 	// e.POST("/api/orders", PayPalOrder)
 	// e.POST("/api/orders/capture/:id", PayPalCaptureOrder)
+
+	//Cart Requests
+	e.POST("/remove", Remove)
+	e.GET("/cart", Cart)
+
 	// //e.POST("/confirm", conf)
 	e.Logger.Fatal(e.Start(":" + getDefEnv("PORT", "8080")))
 
