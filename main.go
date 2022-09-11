@@ -29,24 +29,25 @@ const (
 type (
 	CartProduct struct {
 		Pr       Product
-		Count    string
-		Subtotal string
+		Count    int
+		Subtotal int
 	}
 
 	CartProducts struct {
 		Products []CartProduct
-		Total    string //`default:0`
+		Total    int //`default:0`
 	}
 
 	Product struct {
 		Id          string `bson:"_id" json:"id"`
 		Name        string `json:"name"`
 		Currency    string `json:"currency"`
-		Price       string `json:"price"`
-		OldPrice    string `json:"oldPrice"`
+		Price       int    `json:"price"`
+		Discount    int    `json:"discount"`
 		Title       string `json:"title"`
 		Description string `json:"description"`
 		Meta        string `json:"meta"`
+		// DiscountedPrice int
 	}
 
 	ProductData struct {
@@ -54,7 +55,20 @@ type (
 	}
 )
 
-//create a Cookie
+// Prices are in in thousands of a $,
+// so we need to format the value of the price for humans
+func (e Product) FormatPriceWithDiscount() string {
+	discounted := (e.Price * (100 - e.Discount)) / 100
+	return formatCurrency(discounted)
+}
+
+func (p Product) FormatPrice() string {
+	return formatCurrency(p.Price)
+}
+
+func formatCurrency(v int) string {
+	return fmt.Sprintf("%d.%d", v/1000, (v/10)%100)
+}
 
 func Index(c echo.Context) error {
 	bestProducts, err := loadData(bestProducts, "")
@@ -68,35 +82,19 @@ func Index(c echo.Context) error {
 func (p *ProductData) CalculateDiscount() {
 	// for _, e := range p.Products {
 	// 	e.Title = "f2osd"
-	// }
+	// } jhkbkhbkhbk
 }
 
 func Shop(c echo.Context) error {
 	order := c.QueryParam("order")
-
 	var (
 		orderedData *ProductData
 		err         error
 	)
-	if order == "HtoL" {
-		orderedData, err = loadData(products, "HtoL")
-		if err != nil {
-			c.Logger().Error(err)
-			return err
-		}
-
-	} else if order == "LtoH" {
-		orderedData, err = loadData(products, "LtoH")
-		if err != nil {
-			c.Logger().Error(err)
-			return err
-		}
-	} else {
-		orderedData, err = loadData(products, "")
-		if err != nil {
-			c.Logger().Error(err)
-			return err
-		}
+	orderedData, err = loadData(products, order)
+	if err != nil {
+		c.Logger().Error(err)
+		return err
 	}
 	return c.Render(http.StatusOK, "shopTmpl", orderedData)
 }
@@ -110,6 +108,11 @@ func ProductDetails(c echo.Context) error {
 	for _, e := range shopProducts.Products {
 		if e.Id == id {
 			fmt.Println("found")
+			//e = injectDiscountedPrice(e)
+			if err != nil {
+				c.Logger().Error("error injecting oldprice: ", err)
+				return err
+			}
 			return c.Render(http.StatusOK, "productTmpl", e)
 		}
 	}
@@ -131,7 +134,7 @@ func AddToCart(c echo.Context) error {
 	}
 	sess.Values[id] = count
 	sess.Save(c.Request(), c.Response())
-	http.Redirect(c.Response(), c.Request(), "/cart", 301)
+	http.Redirect(c.Response(), c.Request(), "/cart", http.StatusMovedPermanently)
 	return nil
 
 }
@@ -142,7 +145,12 @@ func SendMessage(c echo.Context) error {
 	title := subject + "    by: " + name + " email: " + email + "\n"
 
 	coll := mongoClient.Database("Contacts").Collection("Contacts")
-	doc := bson.D{{Key: "title", Value: title}, {Key: "body", Value: message}, {Key: "name", Value: name}, {Key: "email", Value: email}}
+	doc := bson.D{
+		{Key: "title", Value: title},
+		{Key: "body", Value: message},
+		{Key: "name", Value: name},
+		{Key: "email", Value: email},
+	}
 
 	ctx, cancel := context.WithTimeout(c.Request().Context(), 10*time.Second)
 	defer cancel()
@@ -171,13 +179,11 @@ func Checkout(c echo.Context) error {
 }
 
 func Cart(c echo.Context) error {
-
 	sess, err := session.Get(defaultSessionName, c)
 	if err != nil {
 		log.Error("error in creating a session")
 		return err
 	}
-	fmt.Println("hey")
 	cart, err := loadCart(sess)
 	if err != nil {
 		c.Logger().Error("error loading cart: %v", err)
@@ -186,6 +192,7 @@ func Cart(c echo.Context) error {
 
 	return c.Render(http.StatusOK, "cartTmpl", cart)
 }
+
 func Remove(c echo.Context) error {
 	id := c.FormValue("id")
 	sess, err := session.Get(defaultSessionName, c)
@@ -221,7 +228,7 @@ func PayPalOrder(c echo.Context) error {
 		c.Logger().Error("error loading cart: %v", err)
 	}
 	totalString := fmt.Sprintf("%.3f", cart.Total)
-	_ = totalString
+	// _ = totalString
 	paypalAmount := paypal.PurchaseUnitAmount{}
 	paypalAmount.Currency = "USD"
 	paypalAmount.Value = totalString
@@ -233,6 +240,9 @@ func PayPalOrder(c echo.Context) error {
 		},
 		&orderPayer, &application)
 
+	if err != nil {
+		return err
+	}
 	fmt.Println(order)
 	// if err != nil {
 	// 	log.Error(err)
@@ -324,9 +334,7 @@ func main() {
 }
 
 func getDefEnv(env string, def string) (res string) {
-
 	res = os.Getenv(env)
-
 	if res == "" {
 		res = def
 	}
