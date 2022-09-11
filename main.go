@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"text/template"
 	"time"
 
 	"github.com/gorilla/sessions"
@@ -291,16 +292,16 @@ func main() {
 	// return
 
 	e := echo.New()
-	// e.Renderer = &Template{
-	// 	templates: template.Must(template.ParseGlob("./static/*.html")),
-	// }
-	// e.Use(session.Middleware(sessions.NewCookieStore([]byte("secret"))))
+	e.Renderer = &Template{
+		templates: template.Must(template.ParseGlob("./static/*.html")),
+	}
+	e.Use(session.Middleware(sessions.NewCookieStore([]byte("secret"))))
 
 	e.Static("/", "./static")
-	// e.GET("/shop", Shop)
-	// e.GET("/", Index)
-	// e.GET("/product/:id", ProductDetails)
-	// e.POST("/addToCart/:id", AddToCart)
+	e.GET("/shop", Shop)
+	e.GET("/", Index)
+	e.GET("/product/:id", ProductDetails)
+	e.POST("/addToCart/:id", AddToCart)
 
 	// e.POST("/sendMessage", SendMessage)
 
