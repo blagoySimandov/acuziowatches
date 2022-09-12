@@ -545,3 +545,16 @@ if($(window).width() <1367){
   $('.main-header').removeClass('sticky-bar')
   $('.main-header').removeClass('header-area')
   }
+  
+  
+
+window.onscroll = function() { 
+
+  if(window.scrollY < 10){
+    $('.main-header').removeClass('shadowNav')
+    console.log("top")
+  } else {
+    $('.main-header').addClass('shadowNav')
+
+  }
+}

@@ -11,6 +11,11 @@
     <link rel="manifest" href="site.webmanifest">
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tiro+Bangla">
+
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    
     <!-- CSS here -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
@@ -23,6 +28,11 @@
     <link rel="stylesheet" href="assets/css/slick.css">
     <link rel="stylesheet" href="assets/css/nice-select.css">
     <link rel="stylesheet" href="assets/css/style.css">
+
+
+
+
+
 </head>
 
 <body>
@@ -38,43 +48,7 @@
         </div>
     </div>
     <!-- Preloader Start -->
-    <header>
-        <!-- Header Start -->
-        <div class="header-area">
-            <div class="main-header header-sticky">
-                <div class="container-fluid">
-                    <div class="menu-wrapper">
-                        <!-- Logo -->
-                        <div class="logo">
-                            <a href="/"><img src="assets/img/logo/logo.png" alt=""></a>
-                        </div>
-                        <!-- Main-menu -->
-                        <div class="main-menu d-none d-lg-block">
-                            <nav>                                                
-                                <ul id="navigation">  
-                                    <li><a href="/">Home</a></li>
-                                    <li><a href="shop">shop</a></li>
-                                    <li><a href="/about">about</a></li>
-                                    <li><a href="/contact">Contact</a></li>
-                                </ul>
-                                </nav>
-                            </div>
-                        <!-- Header Right -->
-                        <div class="header-right">
-                            <ul>
-                                <li><a href="https://www.instagram.com/acuziowatches2022/"  target="_blank"><img class="flaticon-shopping-cart"src="/assets/img/instagram.png" style="margin-bottom: 3px;"width="16px"></a></li>                              <li><a href="/cart"><span style="margin-left:10px;"class="flaticon-shopping-cart"></span></a> </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Mobile Menu -->
-                    <div class="col-12">
-                        <div class="mobile_menu d-block d-lg-none"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Header End -->
-    </header>
+    {{template "Navbar"}}
     <main>
         <!--? slider Area Start -->
         <div class="slider-area ">
@@ -107,7 +81,7 @@
                         <div class="row justify-content-between align-items-center">
                             <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
                                 <div class="hero__caption">
-                                    <h1 data-animation="fadeInLeft" data-delay=".4s" data-duration="2000ms" style="font-size: 100px">Mastering the rules only to break them.<style></style></h1>
+                                    <h1 data-animation="fadeInLeft" data-delay=".4s" data-duration="2000ms" class="heading2">Mastering the rules only to break them.<style></style></h1>
                                     <h3 data-animation="fadeInLeft" data-delay=".7s" data-duration="2000ms" class="sub-heading">Our designs combine the traditions of old with the new ways of watch manufacturing</h3>
                                     <!-- Hero-btn -->
                                     <div class="hero__btn" data-animation="fadeInLeft" data-delay=".8s" data-duration="2000ms">
@@ -158,6 +132,32 @@
                 </div>
             </div>
         </div>
+        {{if not .NotVisited}}
+            <script>
+            $(document).ready(setTimeout(()=>{
+                $("#myModal").modal('show');
+            },3000));
+            </script>
+            <div id="myModal" class="modal fade">
+                <div class="modal-dialog modal-newsletter">
+                    <div class="modal-content">
+                        <form action="/examples/actions/confirmation.php" method="post">
+                            <div class="modal-header">
+                                <h4>Don't Miss Out On Our Deals</h4>	
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span>&times;</span></button>
+                            </div>
+                            <div class="modal-body text-center">				
+                                <p>Subscribe to receive the latest news and exclusive offers.</p>
+                                <div class="form-group">
+                                    <input type="email" class="form-control" placeholder="Enter your email" required>
+                                    <input type="submit" class="btn btn-primary btn-block" value="Subscribe">
+                                </div>
+                            </div>
+                        </form>			
+                    </div>
+                </div>
+            </div>
+        {{end}}
         <!-- Gallery Area End -->
 
         <!-- Popular Items End -->
@@ -208,7 +208,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            {{range $id,$el := .Products}}
+                            {{range $id,$el := .Pr.Products}}
                                 {{template "SingleProduct" $el}}
                             {{end}}
                         </div>

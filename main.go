@@ -27,6 +27,10 @@ const (
 )
 
 type (
+	IndexTemplate struct {
+		Pr         *ProductData
+		NotVisited interface{}
+	}
 	CartProduct struct {
 		Pr       Product
 		Count    int
@@ -70,12 +74,28 @@ func (e Product) PriceWithDiscount() typePrice {
 }
 
 func Index(c echo.Context) error {
+	sess, err := session.Get(defaultSessionName, c)
+	if err != nil {
+		c.Logger().Error(err)
+	}
+	sess.Options = &sessions.Options{
+		Path:     "/",
+		MaxAge:   1800,
+		HttpOnly: true,
+	}
+
 	bestProducts, err := loadData(bestProducts, "")
+	var tmpl = IndexTemplate{
+		Pr:         bestProducts,
+		NotVisited: sess.Values["visited"],
+	}
+	sess.Values["visited"] = true
+	sess.Save(c.Request(), c.Response().Writer)
 	if err != nil {
 		c.Logger().Error("error loading data: %v", err)
 		return err
 	}
-	return c.Render(http.StatusOK, "indexTmpl", bestProducts)
+	return c.Render(http.StatusOK, "indexTmpl", tmpl)
 }
 
 func (p *ProductData) CalculateDiscount() {
@@ -136,6 +156,12 @@ func AddToCart(c echo.Context) error {
 	http.Redirect(c.Response(), c.Request(), "/cart", http.StatusMovedPermanently)
 	return nil
 
+}
+func Contact(c echo.Context) error {
+	return c.Render(http.StatusOK, "Contact", "")
+}
+func About(c echo.Context) error {
+	return c.Render(http.StatusOK, "About", "")
 }
 func SendMessage(c echo.Context) error {
 	email, name := c.FormValue("email"), c.FormValue("name")
@@ -313,8 +339,8 @@ func main() {
 
 	e.POST("/sendMessage", SendMessage)
 
-	e.File("/about", "static/about.html")
-	e.File("/contact", "static/contact.html")
+	e.GET("/about", About)
+	e.GET("/contact", Contact)
 	e.File("/submit-success", "static/submit-success.html")
 
 	//Chekout and payment

@@ -192,7 +192,146 @@ span {
 .f-left {
     float: left
 }
+/* sdjnasndjas */
 
+
+
+
+.modal-newsletter {	
+	color: #9f9f9f;
+	width: 525px;
+	font-size: 15px;
+   z-index: 9999999;
+}		
+.modal-newsletter .modal-content {
+	padding: 40px 50px;
+	border-radius: 1px;		
+	border: none;
+    margin-top: 230px;
+}
+@media screen and (max-height: 800px) {
+    .modal-newsletter .modal-content {
+        margin-top: 150px;
+    }
+}
+.modal-newsletter .modal-header {
+	border-bottom: none;   
+	position: relative;
+	text-align: center;
+	border-radius: 5px 5px 0 0;
+}
+.heading2{
+    font-size: 100px;
+}
+@media screen and(max-width: 1200px){
+    .heading2{
+        font-size: 50px;
+    }
+}
+.modal-newsletter h4 {
+	color: #000;
+	text-align: center;
+	font-family: 'Raleway', sans-serif;
+	font-weight: 800;
+	font-size: 30px;
+	margin: 0;		
+	text-transform: uppercase;
+}	
+.modal-newsletter .close {
+	position: absolute;
+	top: -25px;
+	right: -35px;
+	color: #c0c3c8;
+	text-shadow: none;
+	opacity: 0.5;
+	font-size: 26px;
+	font-weight: normal;
+}
+.modal-newsletter .close:hover {
+	opacity: 0.8;
+}
+.modal-newsletter .form-control, .modal-newsletter .btn {
+	min-height: 46px;
+	text-align: center;
+	border-radius: 1px; 
+}
+.modal-newsletter .form-control {
+	box-shadow: none;
+	background: #f5f5f5;
+	border-color: #d5d5d5;
+}
+.modal-newsletter .form-control:focus {
+	border-color: #ccc;
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+.modal-newsletter .btn {
+	color: #fff;
+	background: #353535;
+	text-decoration: none;
+	transition: all 0.4s;
+	line-height: normal;
+	padding: 6px 20px;
+	border: none;
+	margin-top: 20px;
+	font-family: 'Raleway', sans-serif;
+	text-transform: uppercase;
+}
+.modal-newsletter .btn:hover, .modal-newsletter .btn:focus {
+	background: #171717;
+	outline: none;
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+}
+.modal-newsletter .form-group {
+	padding: 0 20px;
+	margin-top: 30px;
+}
+.modal-newsletter .footer-link{
+	margin-top: 20px;
+	min-height: 25px;
+}
+.modal-newsletter .footer-link a {
+	color: #353535;
+	display: inline-block;
+	border-bottom: 2px solid;
+	font-weight: bold;
+	text-align: center;		
+	text-transform: uppercase;
+	font-size: 14px;
+}
+.modal-newsletter .footer-link a:hover, .modal-newsletter .footer-link a:focus {
+	text-decoration: none;
+	border: none;
+}
+.hint-text {
+	margin: 100px auto;
+	text-align: center;
+}
+
+
+
+
+ksamndkmas
+
+
+.email-input{
+    width: 200px;
+    padding: 5px 5px;
+     line-height: 28px;
+    position: absolute;
+    right:45px;
+}
+@media screen and (min-width: 1200px){
+    .email-input{
+        width: 33   0px;
+        padding: 5px 5px;
+         line-height: 28px;
+        position: absolute;
+        right:45px;
+    }
+}
+.payment_item{
+    margin-top: 80px;
+}
 .f-right {
     float: right
 }
@@ -606,13 +745,15 @@ input:focus::-moz-placeholder {
     position: fixed;
     top: 0;
     width: 100%;
-    -webkit-box-shadow: 0 10px 15px rgba(25, 25, 25, 0.1);
-    box-shadow: 0 10px 15px rgba(25, 25, 25, 0.1);
     z-index: 9999;
     -webkit-animation: 300ms ease-in-out 0s normal none 1 running fadeInDown;
     animation: 300ms ease-in-out 0s normal none 1 running fadeInDown;
     background: #fff;
     margin-bottom: 400px;
+}
+.shadowNav{
+    -webkit-box-shadow: 0 3px 3px rgba(15, 15, 15, 0.1);
+    box-shadow: 0 3px 3px rgba(15, 15, 15, 0.1);
 }
 .p_star > .error {
     color: red;
@@ -3186,7 +3327,7 @@ input:focus {
 }
 
 .slider-height {
-    min-height: 980px;
+    max-height: 700px;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover
@@ -3194,7 +3335,7 @@ input:focus {
 
 @media only screen and (min-width: 1200px) and (max-width: 1600px) {
     .slider-height {
-        min-height: 750px
+        min-height: 700px
     }
 }
 
@@ -3242,7 +3383,11 @@ input:focus {
 .slider-area .hero__img {
     position: relative
 }
-
+@media only screen and (min-width: 1200px) and (max-width: 1600px) {
+    .slider-area .hero__img img {
+        height: 800px
+    }
+}
 @media (min-width: 1200px) and (max-width: 1400px) {
     .slider-area .hero__img {
         left: -104px
@@ -10131,7 +10276,7 @@ input:focus {
     border-radius: 0px
 }
 .list {
-    max-height: 120px; 
+    max-height: 180px; 
     overflow-y: scroll !important;
   }
 .billing_details .contact_form .form-group .country_select .list li {
