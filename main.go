@@ -30,23 +30,25 @@ type (
 	CartProduct struct {
 		Pr       Product
 		Count    int
-		Subtotal int
+		Subtotal typePrice
 	}
 
 	CartProducts struct {
 		Products []CartProduct
-		Total    int //`default:0`
+		Total    typePrice //`default:0`
 	}
 
+	typePrice int
+
 	Product struct {
-		Id          string `bson:"_id" json:"id"`
-		Name        string `json:"name"`
-		Currency    string `json:"currency"`
-		Price       int    `json:"price"`
-		Discount    int    `json:"discount"`
-		Title       string `json:"title"`
-		Description string `json:"description"`
-		Meta        string `json:"meta"`
+		Id          string    `bson:"_id" json:"id"`
+		Name        string    `json:"name"`
+		Currency    string    `json:"currency"`
+		Price       typePrice `json:"price"`
+		Discount    int       `json:"discount"`
+		Title       string    `json:"title"`
+		Description string    `json:"description"`
+		Meta        string    `json:"meta"`
 		// DiscountedPrice int
 	}
 
@@ -55,19 +57,16 @@ type (
 	}
 )
 
+func (t typePrice) String() string {
+	v := int(t)
+	return fmt.Sprintf("%d.%d", v/1000, (v/10)%100)
+}
+
 // Prices are in in thousands of a $,
 // so we need to format the value of the price for humans
-func (e Product) FormatPriceWithDiscount() string {
-	discounted := (e.Price * (100 - e.Discount)) / 100
-	return formatCurrency(discounted)
-}
-
-func (p Product) FormatPrice() string {
-	return formatCurrency(p.Price)
-}
-
-func formatCurrency(v int) string {
-	return fmt.Sprintf("%d.%d", v/1000, (v/10)%100)
+func (e Product) PriceWithDiscount() typePrice {
+	discounted := (int(e.Price) * (100 - e.Discount) / 100)
+	return typePrice(discounted)
 }
 
 func Index(c echo.Context) error {
@@ -101,14 +100,14 @@ func Shop(c echo.Context) error {
 func ProductDetails(c echo.Context) error {
 	id := c.Param("id")
 	shopProducts, err := loadData(products, "")
+
 	if err != nil {
 		c.Logger().Error("error Loading products: %v", err)
 		return err
 	}
+
 	for _, e := range shopProducts.Products {
 		if e.Id == id {
-			fmt.Println("found")
-			//e = injectDiscountedPrice(e)
 			if err != nil {
 				c.Logger().Error("error injecting oldprice: ", err)
 				return err

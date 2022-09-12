@@ -169,13 +169,13 @@
         </p>
         <div class="price-box">
           <div class="price-box__main">
-            <span class="price-box__main-new">{{.Currency}} {{.FormatPriceWithDiscount}}</span>
+            <span class="price-box__main-new">{{.Currency}} {{.PriceWithDiscount}}</span>
             {{if .Discount}}
               <span class="price-box__main-discount">{{.Discount}}%</span>
             {{end}}
           </div>
           {{if .Discount}}
-              <span class="price-box__old">{{.FormatPrice}}</span>
+              <span class="price-box__old">{{.Price}}</span>
           {{end}}
         </div>
         <form action="/addToCart/{{.Id}}" method="POST" enctype="application/x-www-form-urlencoded">

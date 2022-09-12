@@ -87,16 +87,21 @@ func loadCart(sess *sessions.Session) (*CartProducts, error) {
 	}
 	var cart CartProducts
 	cart.Total = 0
-	for key, count := range sess.Values {
+	for key, value := range sess.Values {
 		for _, p := range products.Products {
 			if key == p.Id {
-				subtotal := count.(int) * p.Price
+				count := value.(string) // TODO Handle reflection error
+				countInt, err := strconv.Atoi(count)
+				if err != nil {
+					return &CartProducts{}, err
+				}
+				subtotal := typePrice(countInt) * (p.PriceWithDiscount())
 				if err != nil {
 					return nil, err
 				}
 				x := CartProduct{
 					Pr:       p,
-					Count:    count.(int),
+					Count:    countInt,
 					Subtotal: subtotal,
 				}
 				cart.Products = append(cart.Products, x)

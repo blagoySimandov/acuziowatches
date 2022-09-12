@@ -2,16 +2,20 @@
 <tr>
   <td>
     <div class="media">
-      <div class="d-flex">
-        <img src="/assets/img/watches/{{.Pr.Name}}/1.webp" alt="" />
-      </div>
-      <div class="media-body">
-        <p>{{.Pr.Name}}</p>
-      </div>
+      <a href="/product/{{.Pr.Id}}">
+        <div class="d-flex">
+          <img src="/assets/img/watches/{{.Pr.Name}}/1.webp" alt="" />
+        </div>
+      </a>
+      
+        <div class="media-body">
+          <a href="/product/{{.Pr.Id}}" style="color: black;">{{.Pr.Name}}</a>
+        </div>
+      
     </div>
   </td>
   <td>
-    <h5>{{.Pr.Currency}} {{.Pr.Price}}</h5>
+    <h5>{{.Pr.Currency}} {{.Pr.PriceWithDiscount}}</h5>
   </td>
   <td>
     <h5>{{.Count}}</h5>
