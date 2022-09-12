@@ -310,7 +310,23 @@ func connectMongo(ctx context.Context) (*mongo.Client, error) {
 	}
 	return client, nil
 }
+func Subscribe(c echo.Context) error {
+	email := c.FormValue("email")
+	coll := mongoClient.Database("Contacts").Collection("Emails")
+	doc := bson.D{
+		{Key: "email", Value: email},
+	}
 
+	ctx, cancel := context.WithTimeout(c.Request().Context(), 10*time.Second)
+	defer cancel()
+	result, err := coll.InsertOne(ctx, doc)
+	if err != nil {
+		c.Logger().Error("Cannot insert data in DB. Error: %v", err)
+		return err
+	}
+	_ = result
+	return c.Redirect(http.StatusMovedPermanently, "/")
+}
 func main() {
 	globalCtx := context.Background()
 	var err error
@@ -336,7 +352,7 @@ func main() {
 	e.GET("/", Index)
 	e.GET("/product/:id", ProductDetails)
 	e.POST("/addToCart/:id", AddToCart)
-
+	e.POST("/subscribe", Subscribe)
 	e.POST("/sendMessage", SendMessage)
 
 	e.GET("/about", About)

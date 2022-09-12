@@ -141,7 +141,7 @@
             <div id="myModal" class="modal fade">
                 <div class="modal-dialog modal-newsletter">
                     <div class="modal-content">
-                        <form action="/examples/actions/confirmation.php" method="post">
+                        <form action="/subscribe" method="post">
                             <div class="modal-header">
                                 <h4>Don't Miss Out On Our Deals</h4>	
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span>&times;</span></button>
@@ -149,7 +149,7 @@
                             <div class="modal-body text-center">				
                                 <p>Subscribe to receive the latest news and exclusive offers.</p>
                                 <div class="form-group">
-                                    <input type="email" class="form-control" placeholder="Enter your email" required>
+                                    <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
                                     <input type="submit" class="btn btn-primary btn-block" value="Subscribe">
                                 </div>
                             </div>
