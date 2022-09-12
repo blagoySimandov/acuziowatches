@@ -3790,7 +3790,9 @@ input:focus {
     display: block;
     color: #1b1b1b;
     text-transform: capitalize;
-    font-size: 16px
+    font-size: 16px;
+    font-family: 'Josefin Sans';
+    font-weight: 500;
 }
 
 .popular-items .nav-tabs .nav-item.show .nav-link,
