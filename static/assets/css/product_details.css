@@ -387,7 +387,7 @@ body {
   /////////////////////// */
 
 .item {
-    padding: 113px 3rem;
+    padding: 107px 3rem;
     max-width: 134rem;
     margin: auto;
     display: grid;
@@ -395,8 +395,8 @@ body {
     gap: 10rem;
 }
 @media screen and (max-width: 1367px) {
-    .item{
-        padding: 0px;
+    .item {
+        padding: 0px 3rem;
     }
 }
 
@@ -686,7 +686,11 @@ input:focus {
         display: none;
     }
 
-
+    .item {
+        
+        grid-template-columns: 1fr;
+        gap: 5rem;
+    }
 
     .img {
         position: relative;
