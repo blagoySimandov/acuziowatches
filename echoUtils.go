@@ -63,6 +63,7 @@ type Template struct {
 // }
 
 func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
+
 	err := t.templates.ExecuteTemplate(w, name, data)
 	if err != nil {
 		fmt.Println("Template error:", err)

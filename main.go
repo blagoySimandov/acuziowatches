@@ -53,6 +53,7 @@ type (
 		Title       string    `json:"title"`
 		Description string    `json:"description"`
 		Meta        string    `json:"meta"`
+		Images      int       `json:"images"`
 		// DiscountedPrice int
 	}
 
@@ -340,11 +341,27 @@ func main() {
 	// }
 	// fmt.Println(p)
 	// return
-
+	type linkInfo struct {
+		In   int
+		Name string
+	}
 	e := echo.New()
 	e.Renderer = &Template{
-		templates: template.Must(template.ParseGlob("./static/*.html")),
+		templates: template.Must(template.New("t").Funcs(template.FuncMap{
+			"Iterate": func(count int, name string) []linkInfo {
+				var i int
+				var Items []linkInfo
+				for i = 1; i <= (count); i++ {
+					Items = append(Items, linkInfo{
+						In:   i,
+						Name: name,
+					})
+				}
+				return Items
+			},
+		}).ParseGlob("./static/*.html")),
 	}
+
 	e.Use(session.Middleware(sessions.NewCookieStore([]byte("secret"))))
 
 	e.Static("/", "./static")

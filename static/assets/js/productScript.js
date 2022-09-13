@@ -97,9 +97,6 @@ imgBtn.forEach((btn, i) => {
 });
 
 /*  Eventlistener to stop transition animation from triggering when page reloading  */
-window.addEventListener("load", function () {
-	transitionDelay();
-});
 
 
 

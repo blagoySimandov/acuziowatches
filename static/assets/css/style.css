@@ -3784,7 +3784,12 @@ input:focus {
         padding: .5rem .6rem
     }
 }
-
+@media screen and (max-width: 450px) {
+    .modal-newsletter {
+        margin: auto!important;
+        width: 350px!important;
+    }
+}
 .popular-items .nav-tabs .nav-item {
     padding-bottom: 10px;
     display: block;

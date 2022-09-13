@@ -557,4 +557,8 @@ window.onscroll = function() {
     $('.main-header').addClass('shadowNav')
 
   }
+  if($(window).width() <1367){
+    $('.main-header').removeClass('shadowNav')
+    }
+
 }
