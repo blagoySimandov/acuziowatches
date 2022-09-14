@@ -200,7 +200,6 @@ func Checkout(c echo.Context) error {
 	if err != nil {
 		c.Logger().Error("error loading cart: %v", err)
 	}
-	fmt.Println(cart)
 	return c.Render(http.StatusOK, "checkoutTmpl", cart)
 }
 
@@ -231,65 +230,108 @@ func Remove(c echo.Context) error {
 	return c.Redirect(http.StatusMovedPermanently, "/cart")
 }
 
-func PayPalOrder(c echo.Context) error {
+func PayPalCreateOrder(c echo.Context) error {
 	// Initialize client
 	p, err := paypal.NewClient(clientID, secretID, paypal.APIBaseSandBox)
 	if err != nil {
-		panic(err)
+		c.Logger().Error("Error creating paypal client at create order", err)
+		return err
+	}
+	ctx, cancel := context.WithTimeout(c.Request().Context(), 10*time.Second)
+	defer cancel()
+	accessToken, err := p.GetAccessToken(ctx)
+	_ = accessToken
+
+	if err != nil {
+		c.Logger().Error("Paypal client error:", err)
+		return err
 	}
 
 	// Retrieve access token
-	_, err = p.GetAccessToken(c.Request().Context())
-	if err != nil {
-		panic(err)
-	}
 
+	token, err := p.GetAccessToken(ctx)
+	if err != nil {
+		c.Logger().Error(err)
+		return err
+	}
+	_ = token
 	sess, err := session.Get(defaultSessionName, c)
 	if err != nil {
 		log.Error("error in creating a session")
+		return err
+	}
+	cart, err := loadCart(sess)
+	if err != nil {
+		c.Logger().Error("error loading cart ar create order", cart)
+		return err
+	}
+	var payer paypal.CreateOrderPayer
+	var application paypal.ApplicationContext
+	var Amount paypal.PurchaseUnitAmount
+
+	Amount.Value = cart.Total.String()
+	Amount.Currency = "USD"
+	order, err := p.CreateOrder(ctx, paypal.OrderIntentCapture, []paypal.PurchaseUnitRequest{paypal.PurchaseUnitRequest{ReferenceID: "ref-id", Amount: &Amount}}, &payer, &application)
+	fmt.Println(order)
+	return c.JSON(http.StatusOK, order)
+}
+func PayPalCaptureOrder(c echo.Context) error {
+	// TODO: store payment information such as the transaction ID
+	sess, err := session.Get(defaultSessionName, c)
+	if err != nil {
+		log.Error("error in creating a session")
+		return err
 	}
 
 	cart, err := loadCart(sess)
 	if err != nil {
-		c.Logger().Error("error loading cart: %v", err)
-	}
-	totalString := fmt.Sprintf("%.3f", cart.Total)
-	// _ = totalString
-	paypalAmount := paypal.PurchaseUnitAmount{}
-	paypalAmount.Currency = "USD"
-	paypalAmount.Value = totalString
-	var orderPayer paypal.CreateOrderPayer
-	var application paypal.ApplicationContext
-	order, err := p.CreateOrder(context.Background(), paypal.OrderIntentCapture,
-		[]paypal.PurchaseUnitRequest{
-			{ReferenceID: "ref-id", Amount: &paypalAmount},
-		},
-		&orderPayer, &application)
-
-	if err != nil {
+		c.Logger().Error("error loading cart ar create order", cart)
 		return err
 	}
-	fmt.Println(order)
-	// if err != nil {
-	// 	log.Error(err)
-	// }
-	return Cart(c)
-}
-func PayPalCaptureOrder(c echo.Context) error {
-	//orderID := c.Param("id")
+	orderID := c.Param("orderId")
 	p, err := paypal.NewClient(clientID, secretID, paypal.APIBaseSandBox)
 	if err != nil {
-		panic(err)
+		c.Logger().Error("Client Paypal Error:", err)
+		return err
 	}
-
-	// Retrieve access token
-	_, err = p.GetAccessToken(context.Background())
+	ctx, cancel := context.WithTimeout(c.Request().Context(), 10*time.Second)
+	defer cancel()
+	accessToken, err := p.GetAccessToken(ctx)
+	_ = accessToken
 	if err != nil {
-		panic(err)
+		c.Logger().Error("Token Paypal Error:", err)
+		return err
 	}
-	//capture, err := p.CaptureOrder(orderID, paypal.CaptureOrderRequest{})
+	order, err := p.GetOrder(ctx, orderID)
+	if err != nil {
+		c.Logger().Error(err)
+		return err
+	}
+	items := make(map[string]int)
+	for _, e := range cart.Products {
+		items[e.Pr.Name] = e.Count
+	}
+	coll := mongoClient.Database("Acuzio").Collection("Orders")
+	doc := bson.D{
+		{Key: "transactionID", Value: order.ID},
+		{Key: "status", Value: order.Status},
+		{Key: "payerName", Value: order.Payer.Name},
+		{Key: "payerEmail", Value: order.Payer.EmailAddress},
+		{Key: "payerCountry", Value: order.Payer.Address.CountryCode},
+		{Key: "shipping", Value: order.PurchaseUnits[0].Shipping},
+		{Key: "items", Value: items},
+	}
+	coll.InsertOne(ctx, doc)
+	capture, err := p.CaptureOrder(ctx, orderID, paypal.CaptureOrderRequest{})
+	if err != nil {
+		c.Logger().Error("Capture order Error:", err)
+		return err
+	}
 
-	return nil
+	return c.JSON(http.StatusOK, capture)
+}
+func ThankYou(c echo.Context) error {
+	return c.Render(http.StatusOK, "thankYou", "")
 }
 
 var (
@@ -375,12 +417,12 @@ func main() {
 	e.GET("/about", About)
 	e.GET("/contact", Contact)
 	e.File("/submit-success", "static/submit-success.html")
-
+	e.GET("/thank-you", ThankYou)
 	//Chekout and payment
 	e.GET("/checkout", Checkout)
 	// //Paypal POST
-	// e.POST("/api/orders", PayPalOrder)
-	// e.POST("/api/orders/capture/:id", PayPalCaptureOrder)
+	e.POST("/api/orders", PayPalCreateOrder)
+	e.POST("/api/orders/capture/:orderId", PayPalCaptureOrder)
 
 	//Cart Requests
 	e.POST("/remove", Remove)

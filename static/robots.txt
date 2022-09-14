@@ -3,3 +3,4 @@ Disallow: /checkout/
 Disallow: /cart/
 Disallow: /notFoundPage.html/
 Disallow: /elements.html/
+Disallow: /thank-you/
