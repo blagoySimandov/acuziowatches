@@ -233,7 +233,7 @@ func Remove(c echo.Context) error {
 
 func PayPalCreateOrder(c echo.Context) error {
 	// Initialize client
-	p, err := paypal.NewClient(clientID, secretID, paypal.APIBaseSandBox)
+	p, err := paypal.NewClient(clientID, secretID, paypal.APIBaseLive)
 	if err != nil {
 		c.Logger().Error("Error creating paypal client at create order", err)
 		return err
@@ -290,7 +290,7 @@ func PayPalCaptureOrder(c echo.Context) error {
 		return err
 	}
 	orderID := c.Param("orderId")
-	p, err := paypal.NewClient(clientID, secretID, paypal.APIBaseSandBox)
+	p, err := paypal.NewClient(clientID, secretID, paypal.APIBaseLive)
 	if err != nil {
 		c.Logger().Error("Client Paypal Error:", err)
 		return err
