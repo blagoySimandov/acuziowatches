@@ -22,9 +22,10 @@ const (
 	products           = "products"
 	bestProducts       = "bestProducts"
 	defaultSessionName = "session"
-	clientID           = "AcQJf_BZi9tLGfptFCXm0hv_TkItaYow6I0VR2UthIppfaWDWKjAm2kmSJhOIEIQsklEEuEjUXJgCs0q"
-	secretID           = "EFw4g1cEJIPzUYIxXWhvURDBBKPcqnIpqwSAyW-h4NWe3NBg28SYWgBfCi7UH-yh03SCgaK_mb2l9n7S"
 )
+
+var clientID = os.Getenv("clientID")
+var secretID = os.Getenv("secretID")
 
 type (
 	IndexTemplate struct {
