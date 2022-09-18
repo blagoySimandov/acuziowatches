@@ -75,7 +75,7 @@
                         </ul>
                         <div class="payment_item">
                           <div id="paypal-button-container"></div>
-                          <script src="https://www.paypal.com/sdk/js?client-id=AcQJf_BZi9tLGfptFCXm0hv_TkItaYow6I0VR2UthIppfaWDWKjAm2kmSJhOIEIQsklEEuEjUXJgCs0q&currency=USD"></script>
+                          <script src="https://www.paypal.com/sdk/js?client-id=AYZfzKw2v-KGE0NzHXxzigT8iRxYe528TjIrCJHKW8G36WuVOUnrxcDoIfBw2x6OuC9fiG-3O2hI2GUv&currency=USD"></script>
                           <script>
 
 paypal.Buttons({
@@ -103,7 +103,7 @@ paypal.Buttons({
             // When ready to go live, remove the alert and show a success message within this page. For example:
             // const element = document.getElementById('paypal-button-container');
             // element.innerHTML = '<h3>Thank you for your payment!</h3>';
-            actions.redirect('/thank_you.');
+            window.location.replace("/thank-you");
           });
         }
       }).render('#paypal-button-container');

@@ -19,13 +19,13 @@ import (
 )
 
 const (
-	products           = "products"
+	products           = "Products"
 	bestProducts       = "bestProducts"
 	defaultSessionName = "session"
 )
 
-var clientID = os.Getenv("clientID")
-var secretID = os.Getenv("secretID")
+var clientID string = "AYZfzKw2v-KGE0NzHXxzigT8iRxYe528TjIrCJHKW8G36WuVOUnrxcDoIfBw2x6OuC9fiG-3O2hI2GUv" //LIVE
+var secretID string = "EG4hiBD1G1ICoDICTavbUapxwkFv9ONx3xj5vb5antJ3CeW1quLLiAKN2Wbl1SJz1FLszV7n9X-IlBVK" //LIVE
 
 type (
 	IndexTemplate struct {
@@ -171,7 +171,7 @@ func SendMessage(c echo.Context) error {
 
 	title := subject + "    by: " + name + " email: " + email + "\n"
 
-	coll := mongoClient.Database("Contacts").Collection("Contacts")
+	coll := mongoClient.Database("Acuzio").Collection("Contacts")
 	doc := bson.D{
 		{Key: "title", Value: title},
 		{Key: "body", Value: message},
@@ -215,7 +215,6 @@ func Cart(c echo.Context) error {
 		c.Logger().Error("error loading cart: %v", err)
 		return err
 	}
-
 	return c.Render(http.StatusOK, "cartTmpl", cart)
 }
 
@@ -247,15 +246,6 @@ func PayPalCreateOrder(c echo.Context) error {
 		c.Logger().Error("Paypal client error:", err)
 		return err
 	}
-
-	// Retrieve access token
-
-	token, err := p.GetAccessToken(ctx)
-	if err != nil {
-		c.Logger().Error(err)
-		return err
-	}
-	_ = token
 	sess, err := session.Get(defaultSessionName, c)
 	if err != nil {
 		log.Error("error in creating a session")
@@ -273,7 +263,10 @@ func PayPalCreateOrder(c echo.Context) error {
 	Amount.Value = cart.Total.String()
 	Amount.Currency = "USD"
 	order, err := p.CreateOrder(ctx, paypal.OrderIntentCapture, []paypal.PurchaseUnitRequest{paypal.PurchaseUnitRequest{ReferenceID: "ref-id", Amount: &Amount}}, &payer, &application)
-	fmt.Println(order)
+	if err != nil {
+		c.Logger().Error(err)
+		return err
+	}
 	return c.JSON(http.StatusOK, order)
 }
 func PayPalCaptureOrder(c echo.Context) error {
@@ -283,7 +276,6 @@ func PayPalCaptureOrder(c echo.Context) error {
 		log.Error("error in creating a session")
 		return err
 	}
-
 	cart, err := loadCart(sess)
 	if err != nil {
 		c.Logger().Error("error loading cart ar create order", cart)
@@ -314,6 +306,7 @@ func PayPalCaptureOrder(c echo.Context) error {
 	}
 	coll := mongoClient.Database("Acuzio").Collection("Orders")
 	doc := bson.D{
+		{Key: "time", Value: order.CreateTime},
 		{Key: "transactionID", Value: order.ID},
 		{Key: "status", Value: order.Status},
 		{Key: "payerName", Value: order.Payer.Name},
@@ -327,6 +320,12 @@ func PayPalCaptureOrder(c echo.Context) error {
 	if err != nil {
 		c.Logger().Error("Capture order Error:", err)
 		return err
+	}
+
+	sess.Options.MaxAge = -1
+	err = sess.Save(c.Request(), c.Response())
+	if err != nil {
+		c.Logger().Fatal("failed to delete session", err)
 	}
 
 	return c.JSON(http.StatusOK, capture)
@@ -356,7 +355,7 @@ func connectMongo(ctx context.Context) (*mongo.Client, error) {
 }
 func Subscribe(c echo.Context) error {
 	email := c.FormValue("email")
-	coll := mongoClient.Database("Contacts").Collection("Emails")
+	coll := mongoClient.Database("Acuzio").Collection("Emails")
 	doc := bson.D{
 		{Key: "email", Value: email},
 	}
@@ -378,12 +377,6 @@ func main() {
 	if mongoClient, err = connectMongo(globalCtx); err != nil {
 		panic(err)
 	}
-	// p, err := loadData(products, "")
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// fmt.Println(p)
-	// return
 	type linkInfo struct {
 		In   int
 		Name string

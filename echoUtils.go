@@ -17,7 +17,7 @@ import (
 )
 
 func loadData(collection string, order string) (*ProductData, error) {
-	coll := mongoClient.Database("Products").Collection(collection)
+	coll := mongoClient.Database("Acuzio").Collection(collection)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
@@ -82,7 +82,7 @@ func PriceStringToInt(a string) (int, error) {
 }
 
 func loadCart(sess *sessions.Session) (*CartProducts, error) {
-	products, err := loadData("products", "")
+	products, err := loadData(products, "")
 	if err != nil {
 		return nil, err
 	}
