@@ -29,7 +29,6 @@ func loadData(collection string, order string) (*ProductData, error) {
 		opt.SetSort(bson.D{{Key: "price", Value: -1}})
 	} else if order == "newest" || order == "" {
 		// we do nothing to Options
-		_ = ""
 	}
 	docs, err := coll.Find(ctx, bson.D{}, opt)
 	if err != nil {

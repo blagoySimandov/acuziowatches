@@ -4,3 +4,5 @@ Disallow: /cart/
 Disallow: /notFoundPage.html/
 Disallow: /elements.html/
 Disallow: /thank-you/
+Disallow: /confirmation.html/
+Disallow: /singleProduct.html/
