@@ -556,7 +556,7 @@ input:focus::-moz-placeholder {
     top: 0;
     width: 100%;
     height: 100%;
-    background: #4a4a4b;
+    background: black;
     z-index: 1;
     transition: transform 0.5s;
     transition-timing-function: ease;
@@ -590,7 +590,7 @@ input:focus::-moz-placeholder {
 
 .hero-btn {
     padding: 25px 29px;
-    background: #4a4a4b
+    background: black
 }
 
 .hero-btn::before {
@@ -11643,4 +11643,5 @@ input:focus {
 
 .logo img{
     height: 100px;
+    margin-left: 50px;
 }
