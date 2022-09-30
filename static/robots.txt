@@ -6,3 +6,10 @@ Disallow: /elements.html/
 Disallow: /thank-you/
 Disallow: /confirmation.html/
 Disallow: /singleProduct.html/
+Disallow: /assets/img/author/
+Disallow: /assets/img/banner/
+Disallow: /assets/img/blog/
+Disallow: /assets/img/elements/
+Disallow: /assets/img/comment/
+Disallow: /assets/img/logo/
+Disallow: /assets/img/gallery/
