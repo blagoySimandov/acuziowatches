@@ -424,7 +424,6 @@ func main() {
 	e.POST("/remove", Remove)
 	e.GET("/cart", Cart)
 
-	// //e.POST("/confirm", conf)
 	e.Logger.Fatal(e.Start(":" + getEnvDef("PORT", "8080")))
 
 }
