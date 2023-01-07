@@ -51,13 +51,13 @@ type Template struct {
 // 	for _, e := range arr {
 // 		price, err := strconv.ParseFloat(e.Price, 64)
 // 		if err != nil {
-// 			fmt.Printf("errorparsing: %v", err)
+// 			fmt.Printf("errorparsing: %v", er
 // 		}
 // 		oldPrice, err := strconv.ParseFloat(e.OldPrice, 64)
 // 		if err != nil {
 // 			fmt.Printf("parse error: %v", err)
 // 		}
-// 		e.PercentOfOldPrice = math.Round(((price / oldPrice) * 100))
+// 		e.PercentOfOldPrice = math.Round(((price /x oldPrice) * 100))
 // 	}
 // }
 

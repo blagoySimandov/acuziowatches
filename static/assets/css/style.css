@@ -745,7 +745,7 @@ input:focus::-moz-placeholder {
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 9999;
+    z-index: 1;
     -webkit-animation: 300ms ease-in-out 0s normal none 1 running fadeInDown;
     animation: 300ms ease-in-out 0s normal none 1 running fadeInDown;
     background: #fff;

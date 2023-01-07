@@ -24,8 +24,10 @@ const (
 	defaultSessionName = "session"
 )
 
-var clientID string = "AYZfzKw2v-KGE0NzHXxzigT8iRxYe528TjIrCJHKW8G36WuVOUnrxcDoIfBw2x6OuC9fiG-3O2hI2GUv" //LIVE
-var secretID string = "EG4hiBD1G1ICoDICTavbUapxwkFv9ONx3xj5vb5antJ3CeW1quLLiAKN2Wbl1SJz1FLszV7n9X-IlBVK" //LIVE
+var (
+	clientID = os.Getenv("ACUZIO_CLIENTID")
+	secretID = os.Getenv("ACUZIO_SECRETID")
+)
 
 type (
 	IndexTemplate struct {
@@ -335,8 +337,7 @@ func ThankYou(c echo.Context) error {
 }
 
 var (
-	uri string = "mongodb+srv://acuzio:uOBzJFvD4voHaWdb@cluster0.ynz5x4i.mongodb.net/?retryWrites=true&w=majority"
-
+	mongoUri    string = os.Getenv("ACUZIO_MONGOURI")
 	mongoClient *mongo.Client
 )
 
@@ -345,7 +346,7 @@ func connectMongo(ctx context.Context) (*mongo.Client, error) {
 	defer cancel()
 	serverAPIOptions := options.ServerAPI(options.ServerAPIVersion1)
 	clientOptions := options.Client().
-		ApplyURI(uri).
+		ApplyURI(mongoUri).
 		SetServerAPIOptions(serverAPIOptions)
 	client, err := mongo.Connect(ctx, clientOptions)
 	if err != nil {
@@ -370,6 +371,7 @@ func Subscribe(c echo.Context) error {
 	_ = result
 	return c.Redirect(http.StatusMovedPermanently, "/")
 }
+
 func main() {
 	globalCtx := context.Background()
 	var err error
@@ -423,11 +425,11 @@ func main() {
 	e.GET("/cart", Cart)
 
 	// //e.POST("/confirm", conf)
-	e.Logger.Fatal(e.Start(":" + getDefEnv("PORT", "8080")))
+	e.Logger.Fatal(e.Start(":" + getEnvDef("PORT", "8080")))
 
 }
 
-func getDefEnv(env string, def string) (res string) {
+func getEnvDef(env string, def string) (res string) {
 	res = os.Getenv(env)
 	if res == "" {
 		res = def
